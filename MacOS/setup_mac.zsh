@@ -75,6 +75,7 @@ casks=(
     vlc
     ticktick
     localsend
+    ente-auth
 )
 
 for cask in "${casks[@]}"; do
