@@ -76,6 +76,7 @@ casks=(
     ticktick
     localsend
     ente-auth
+    zotero
 )
 
 for cask in "${casks[@]}"; do
