@@ -77,6 +77,7 @@ casks=(
     localsend
     ente-auth
     zotero
+    cleanupbuddy
 )
 
 for cask in "${casks[@]}"; do
