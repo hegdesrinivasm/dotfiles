@@ -47,6 +47,7 @@ echo -e "${BLUE}Installing Command Line Utilities...${NC}"
 formulae=(
     python
     git
+    java
 )
 
 for formula in "${formulae[@]}"; do
