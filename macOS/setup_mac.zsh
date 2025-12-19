@@ -79,6 +79,7 @@ casks=(
     ente-auth
     zotero
     cleanupbuddy
+    tailscale-app
 )
 
 for cask in "${casks[@]}"; do
