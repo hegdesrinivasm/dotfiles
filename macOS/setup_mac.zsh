@@ -80,6 +80,11 @@ casks=(
     zotero
     cleanupbuddy
     tailscale-app
+    affinity
+    steam
+    firefox
+    microsoft-teams
+    shottr
 )
 
 for cask in "${casks[@]}"; do
