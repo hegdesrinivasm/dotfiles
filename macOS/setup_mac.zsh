@@ -48,6 +48,9 @@ formulae=(
     python
     git
     java
+    pyenv
+    pyenv-virtualenv
+    openjdk
 )
 
 for formula in "${formulae[@]}"; do
@@ -69,22 +72,20 @@ echo -e "${BLUE}Installing GUI Applications (Casks)...${NC}"
 casks=(
     visual-studio-code
     notion
-    microsoft-edge
     discord
     signal
+    caffeine
     raycast
     vlc
     ticktick
-    localsend
     ente-auth
     zotero
     cleanupbuddy
     tailscale-app
     affinity
     steam
-    firefox
-    microsoft-teams
     shottr
+    zen
 )
 
 for cask in "${casks[@]}"; do
