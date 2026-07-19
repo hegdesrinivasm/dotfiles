@@ -43,3 +43,10 @@ echo "========================================="
 echo "Configuration Complete!"
 echo "Current Global Config:"
 git config --global --list
+
+# Add an SSH key
+if ! ls ~/.ssh/id_ed25519.pub; then
+    ssh-keygen -t ed25519
+    echo "Copy the SSH key that will be output next and paste it in GitHub SSH Keys"
+    cat ~/.ssh/id_ed25519.pub
+    ssh -T git@github.com
