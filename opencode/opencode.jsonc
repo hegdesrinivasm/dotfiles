@@ -1,0 +1,12 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "shell": "/bin/zsh",
+  "command": {
+    "explain": {
+      "template": "Go through the entire codebase and explain the tech stack, architecture, and what it does.",
+      "description": "Explain the codebase and its tech."
+    }
+  },
+  "default_agent": "plan",
+  "autoupdate": "notify"
+}

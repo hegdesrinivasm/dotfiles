@@ -17,8 +17,10 @@ git config --global alias.br branch
 git config --global alias.lg "log --graph --oneline --decorate --all"
 # unstage = remove files from index
 git config --global alias.unstage "reset HEAD --"
+# add all
+git config --global alias.aa "add ."
 
-echo "Aliases added: st, co, ci, br, lg, unstage"
+echo "Aliases added: st, co, ci, br, lg, unstage, aa"
 
 echo "---Setting up Global .gitignore ---"
 GLOBAL_IGNORE="$HOME/.gitignore_global"
