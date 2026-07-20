@@ -1,6 +1,6 @@
 ---
 description: Reviews code for correctness, security, performance, and maintainability. Use after implementing a feature or before merging changes — does not modify files.
-mode: primary
+mode: subagent
 temperature: 0.1
 permission:
   edit: deny
