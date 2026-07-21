@@ -25,5 +25,9 @@
     }
   },
   "default_agent": "plan",
-  "autoupdate": "notify"
+  "autoupdate": "notify",
+  "plugin": [
+    "@tarquinen/opencode-dcp@latest",
+    "superpowers@git+https://github.com/obra/superpowers.git"
+  ]
 }
