@@ -14,7 +14,7 @@ if %errorlevel% neq 0 (
         pause
         exit /b 1
     )
-    echo Installing App Installer (winget)...
+    echo Installing App Installer [winget]...
     powershell -Command "Add-AppxPackage -Path '%TEMP%\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle'"
     if !errorlevel! neq 0 (
         echo Failed to install winget. Try running as Administrator.
@@ -23,11 +23,11 @@ if %errorlevel% neq 0 (
     )
 )
 
-echo [2/2] Installing apps from official winget repository (--source winget)...
+echo [2/2] Installing apps from official winget repository [--source winget]...
 for %%a in (%APPS%) do (
     echo Installing %%a...
     winget install --exact --id %%a --source winget --accept-package-agreements --accept-source-agreements
-    echo.
+    echo(
 )
 
 echo All done!
