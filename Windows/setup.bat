@@ -1,7 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set "APPS=Mozilla.Firefox ente-io.auth-desktop Bitwarden.Bitwarden Valve.Steam Microsoft.VisualStudioCode Notion.Notion"
+set "APPS=Mozilla.Firefox ente-io.auth-desktop Bitwarden.Bitwarden Valve.Steam Microsoft.VisualStudioCode Notion.Notion Tailscale.Tailscale"
 
 echo [1/2] Checking for winget...
 where winget >nul 2>&1
