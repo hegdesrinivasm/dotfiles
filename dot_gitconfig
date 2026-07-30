@@ -1,0 +1,16 @@
+[user]
+	name = Srinivas Hegde M
+	email = hegdesrinivasm@gmail.com
+[core]
+	editor = code --wait
+	excludesfile = /Users/hegdesrinivasm/.gitignore_global
+[alias]
+	st = status
+	co = checkout
+	ci = commit
+	aa = add .
+	cm = commit -m
+	br = branch
+	loo = log --oneline
+	lg = log --graph --oneline --decorate --all
+	unstage = reset HEAD --
