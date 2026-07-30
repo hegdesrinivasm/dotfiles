@@ -42,9 +42,18 @@ preflight_check() {
     echo "   Pre-flight Status Check"
     echo "==================================="
     echo ""
-    local apps=("code" "opencode" "antigravity" "gh" "ollama")
+    local apps=("code" "opencode" "gh" "ollama" "nu" "ghostty" "chezmoi")
     for app in "${apps[@]}"; do
         if app_installed "$app"; then
+            warn "$app is already installed."
+        else
+            info "$app is NOT installed (will install)."
+        fi
+    done
+
+    local flatpak_apps=("com.bitwarden.desktop" "io.ente.auth")
+    for app in "${flatpak_apps[@]}"; do
+        if flatpak list --columns=application 2>/dev/null | grep -q "$app"; then
             warn "$app is already installed."
         else
             info "$app is NOT installed (will install)."
@@ -80,25 +89,6 @@ install_opencode() {
     info "Opencode installed."
 }
 
-install_antigravity() {
-    if app_installed "antigravity"; then
-        warn "Google Antigravity is already installed. Skipping."
-        return 0
-    fi
-
-    info "Installing Google Antigravity..."
-
-    curl -fsSL https://us-central1-apt.pkg.dev/doc/repo-signing-key.gpg \
-        | gpg --dearmor -o /etc/pki/rpm-gpg/RPM-GPG-KEY-antigravity \
-        || { error "Failed to fetch Antigravity GPG key"; return 1; }
-
-    echo -e "[antigravity]\nname=Google Antigravity\nbaseurl=https://us-central1-apt.pkg.dev/projects/antigravity-auto-updater-dev/antigravity-rpm\nenabled=1\ngpgcheck=1\ngpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-antigravity" \
-        > /etc/yum.repos.d/antigravity.repo
-
-    dnf install -y -q antigravity || { error "Failed to install Antigravity"; return 1; }
-    info "Google Antigravity installed."
-}
-
 install_ollama() {
     if app_installed "ollama"; then
         warn "Ollama Desktop App is already installed. Skipping."
@@ -129,6 +119,62 @@ install_gh_cli() {
     info "GitHub CLI installed."
 }
 
+install_nushell() {
+    if app_installed "nu"; then
+        warn "Nushell is already installed. Skipping."
+        return 0
+    fi
+
+    info "Installing Nushell..."
+    dnf install -y -q nushell || { error "Failed to install Nushell"; return 1; }
+    info "Nushell installed."
+}
+
+install_ghostty() {
+    if app_installed "ghostty"; then
+        warn "Ghostty is already installed. Skipping."
+        return 0
+    fi
+
+    info "Installing Ghostty terminal..."
+    dnf copr enable pgdev/ghostty -y || { error "Failed to enable Ghostty COPR"; return 1; }
+    dnf install -y -q ghostty || { error "Failed to install Ghostty"; return 1; }
+    info "Ghostty terminal installed."
+}
+
+install_bitwarden() {
+    if flatpak list --columns=application 2>/dev/null | grep -q "com.bitwarden.desktop"; then
+        warn "Bitwarden is already installed. Skipping."
+        return 0
+    fi
+
+    info "Installing Bitwarden..."
+    flatpak install -y flathub com.bitwarden.desktop || { error "Failed to install Bitwarden"; return 1; }
+    info "Bitwarden installed."
+}
+
+install_ente_auth() {
+    if flatpak list --columns=application 2>/dev/null | grep -q "io.ente.auth"; then
+        warn "Ente Auth is already installed. Skipping."
+        return 0
+    fi
+
+    info "Installing Ente Auth..."
+    flatpak install -y flathub io.ente.auth || { error "Failed to install Ente Auth"; return 1; }
+    info "Ente Auth installed."
+}
+
+install_chezmoi() {
+    if app_installed "chezmoi"; then
+        warn "Chezmoi is already installed. Skipping."
+        return 0
+    fi
+
+    info "Installing Chezmoi..."
+    dnf install -y -q chezmoi || { error "Failed to install Chezmoi"; return 1; }
+    info "Chezmoi installed."
+}
+
 main() {
     check_root
     preflight_check
@@ -143,11 +189,17 @@ main() {
 
     local failed=0
 
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
     install_vscode    || (( failed++ ))
     install_opencode  || (( failed++ ))
-    install_antigravity || (( failed++ ))
     install_gh_cli    || (( failed++ ))
     install_ollama    || (( failed++ ))
+    install_nushell   || (( failed++ ))
+    install_ghostty   || (( failed++ ))
+    install_bitwarden || (( failed++ ))
+    install_ente_auth || (( failed++ ))
+    install_chezmoi   || (( failed++ ))
 
     echo ""
     if (( failed > 0 )); then
