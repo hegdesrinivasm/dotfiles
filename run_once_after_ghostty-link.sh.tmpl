@@ -1,0 +1,5 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/sh
+mkdir -p ~/.config/ghostty
+ln -sfn ~/Library/Application\ Support/com.mitchellh.ghostty/config.ghostty ~/.config/ghostty/config.ghostty
+{{ end -}}
