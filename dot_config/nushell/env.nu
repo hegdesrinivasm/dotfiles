@@ -2,6 +2,9 @@
 #
 # version = "0.99.1"
 
+# Homebrew (macOS) — harmless on Linux, prepended for priority
+$env.PATH = ($env.PATH | prepend ["/opt/homebrew/bin" "/opt/homebrew/sbin"])
+
 def create_left_prompt [] {
     let dir = match (do --ignore-shell-errors { $env.PWD | path relative-to $nu.home-path }) {
         null => $env.PWD
