@@ -16,5 +16,11 @@ if ($opencode_bin | path exists) {
     $env.PATH = ($env.PATH | append $opencode_bin)
 }
 
+# chezmoi
+let local_bin = ($env.HOME | path join ".local" "bin")
+if ($local_bin | path exists) {
+    $env.PATH = ($env.PATH | append $local_bin)
+}
+
 # env.nu runs once per nested shell; dedup so PATH doesn't accumulate
 $env.PATH = ($env.PATH | uniq)
