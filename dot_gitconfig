@@ -14,3 +14,5 @@
 	loo = log --oneline
 	lg = log --graph --oneline --decorate --all
 	unstage = reset HEAD --
+[init]
+	defaultBranch = main

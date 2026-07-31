@@ -1,6 +1,6 @@
 {
     "$schema": "https://opencode.ai/tui.json",
-    "theme": "tokyonight",
+    "theme": "flexoki",
     "plugin": [
       "@tarquinen/opencode-dcp@latest"
     ]
