@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "username": "Srinivas Hegde M",
   "shell": "/bin/zsh",
   "command": {
     "explore": {
