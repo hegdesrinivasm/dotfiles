@@ -1,7 +1,7 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "username": "Srinivas Hegde M",
-  "shell": "/bin/zsh",
+  "shell": {{ if eq .chezmoi.os "windows" }}"nu"{{ else }}"/bin/zsh"{{ end }},
   "command": {
     "explore": {
       "template": "Explore the codebase and understand the structure, architecture, and functionalities of the code.",
