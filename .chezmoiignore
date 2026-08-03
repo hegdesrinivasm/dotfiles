@@ -1,0 +1,16 @@
+{{- if eq .chezmoi.os "windows" }}
+# Windows: no zsh, no Ghostty, and nushell reads %APPDATA%\nushell instead of ~/.config/nushell
+.zshrc
+.config/ghostty/**
+.config/nushell/**
+{{- end }}
+
+{{- if ne .chezmoi.os "darwin" }}
+# macOS app-support paths (Library) only exist on macOS
+Library/**
+{{- end }}
+
+{{- if ne .chezmoi.os "windows" }}
+# Windows AppData paths only exist on Windows
+AppData/**
+{{- end }}
