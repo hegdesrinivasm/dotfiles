@@ -3,7 +3,10 @@
 	email = hegdesrinivasm@gmail.com
 [core]
 	editor = code --wait
-	excludesfile = /Users/hegdesrinivasm/.gitignore_global
+	excludesfile = {{ .chezmoi.homeDir }}/.gitignore_global
+{{- if eq .chezmoi.os "windows" }}
+	autocrlf = true
+{{- end }}
 [alias]
 	st = status
 	co = checkout
