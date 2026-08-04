@@ -3,7 +3,7 @@
 	email = hegdesrinivasm@gmail.com
 [core]
 	editor = code --wait
-	excludesfile = {{ .chezmoi.homeDir }}/.gitignore_global
+	excludesfile = {{ .chezmoi.homeDir | replace "\\" "/" }}/.gitignore_global
 {{- if eq .chezmoi.os "windows" }}
 	autocrlf = true
 {{- end }}
