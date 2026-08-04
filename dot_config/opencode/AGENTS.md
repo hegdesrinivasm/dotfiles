@@ -22,3 +22,12 @@ Always use conventional commit messages, e.g. `feat:`, `fix:`, `chore:`, `docs:`
 ### Opening PRs
 
 When opening a pull request, always ask the user where to target it: **upstream** or **origin**.
+
+### Avoiding Divergent Branches After PR Merges
+
+Squash-merging a PR leaves your local branch ahead of and behind `origin/<branch>`. To prevent this:
+
+1. Commit on a dedicated **feature branch** (e.g. `git checkout -b pyenv`), not on `main` or `chezmoi`.
+2. After the PR is squash-merged, sync the base branch:
+   `git checkout chezmoi && git fetch origin && git reset --hard origin/chezmoi`
+3. If your local branch and `origin` have diverged with identical content, resetting to `origin` is safe and preferred over merging.
