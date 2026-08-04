@@ -10,6 +10,13 @@ if $nu.os-info.name == "macos" {
     $env.PATH = ($env.PATH | prepend ["/opt/homebrew/bin" "/opt/homebrew/sbin"])
 }
 
+# pyenv — nushell is the login shell, so .zshrc never runs; add shims ourselves
+$env.PYENV_ROOT = ($env.HOME | path join ".pyenv")
+let pyenv_shims = ($env.PYENV_ROOT | path join "shims")
+if ($pyenv_shims | path exists) {
+    $env.PATH = ($env.PATH | prepend $pyenv_shims)
+}
+
 # opencode
 let opencode_bin = ($env.HOME | path join ".opencode" "bin")
 if ($opencode_bin | path exists) {
