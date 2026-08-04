@@ -3,6 +3,7 @@
 ## Identity
 
 - The user is Srinivas Hegde M. Address them as Srinivas.
+- GitHub username: "hegdesrinivasm". Use this to check for assigned tasks or issues.
 
 ## Git Workflow
 
