@@ -26,7 +26,6 @@ When opening a pull request, always ask the user where to target it: **upstream*
 ### Avoiding Divergent Branches After PR Merges
 
 Squash-merging a PR leaves your local branch ahead of and behind `origin/<branch>`. To prevent this:
-
 1. Commit on a dedicated **feature branch** (e.g. `git checkout -b pyenv`), not on `main` or `chezmoi`.
 2. After the PR is squash-merged, sync the base branch:
    `git checkout chezmoi && git fetch origin && git reset --hard origin/chezmoi`
