@@ -9,6 +9,8 @@
 
 ### Starting Work on a Feature
 
+Before you make any edits: Make sure you are not on the default branch to avoid "ahead and behind by 'n' commits" issues in the local after PR squash-merges beforehand.
+
 When working on a new feature:
 
 1. Fetch from the remote and check that local `main` is in sync with `origin/main`.
@@ -22,11 +24,3 @@ Always use conventional commit messages, e.g. `feat:`, `fix:`, `chore:`, `docs:`
 ### Opening PRs
 
 When opening a pull request, always ask the user where to target it: **upstream** or **origin**.
-
-### Avoiding Divergent Branches After PR Merges
-
-Squash-merging a PR leaves your local branch ahead of and behind `origin/<branch>`. To prevent this:
-1. Commit on a dedicated **feature branch** (e.g. `git checkout -b pyenv`), not on `main` or `chezmoi`.
-2. After the PR is squash-merged, sync the base branch:
-   `git checkout chezmoi && git fetch origin && git reset --hard origin/chezmoi`
-3. If your local branch and `origin` have diverged with identical content, resetting to `origin` is safe and preferred over merging.
