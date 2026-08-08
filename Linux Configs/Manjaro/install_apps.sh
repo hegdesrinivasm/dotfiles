@@ -177,7 +177,7 @@ main() {
 
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-    pamac install --no-confirm base-devel || { error "Failed to install base-devel"; (( failed++ )); }
+    pamac install --no-confirm base-devel || { error "Failed to install base-devel (required for AUR builds). Aborting."; exit 1; }
 
     install_vscode    || (( failed++ ))
     install_opencode  || (( failed++ ))
@@ -192,10 +192,11 @@ main() {
     echo ""
     if (( failed > 0 )); then
         error "$failed application(s) failed to install. Check the output above for details."
+        exit 1
     else
         info "All applications installed successfully!"
+        exit 0
     fi
-    echo ""
 }
 
 main "$@"
