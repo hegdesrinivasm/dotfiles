@@ -1,0 +1,11 @@
+# Bash — loaded for interactive shells.
+
+# Load the shared environment bootstrap.
+if [ -f "$HOME/.config/shell/env.sh" ]; then
+  . "$HOME/.config/shell/env.sh"
+fi
+
+# pyenv shell integration.
+if command -v pyenv >/dev/null 2>&1; then
+  eval "$(pyenv init - bash)"
+fi
