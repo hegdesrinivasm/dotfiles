@@ -1,21 +1,12 @@
-# Homebrew (macOS only) — prepended for priority
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+# Zsh — loaded for interactive shells.
 
-# Java (Homebrew OpenJDK)
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-
-# Pyenv - Python version manager
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-# opencode
-if [[ -d "$HOME/.opencode/bin" ]]; then
-  PATH="$PATH:$HOME/.opencode/bin"
+# Load the shared environment bootstrap.
+if [[ -f "$HOME/.config/shell/env.sh" ]]; then
+  . "$HOME/.config/shell/env.sh"
 fi
 
-# local bin
-if [[ -d "$HOME/.local/bin" ]]; then
-  PATH="$PATH:$HOME/.local/bin"
+# pyenv — Python version manager
+if command -v pyenv >/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
 fi
