@@ -1,5 +1,10 @@
-{{ if eq .chezmoi.os "darwin" -}}
+{{ if and (eq .chezmoi.os "darwin") (not (stat (joinPath .chezmoi.homeDir ".install-apps.done"))) -}}
 #!/bin/zsh
+
+if command -v fish >/dev/null 2>&1 || command -v nu >/dev/null 2>&1; then
+    touch "$HOME/.install-apps.done"
+    exit 0
+fi
 
 # macOS Setup Script
 # Installs Homebrew, CLI Tools, and specific applications.
@@ -61,12 +66,17 @@ formulae=(
     lua
 )
 
+failed=0
+
 for formula in "${formulae[@]}"; do
     if brew list --formula | grep -q "^${formula}$"; then
         echo -e "${GREEN}$formula is already installed.${NC}"
     else
         echo -e "${BLUE}Installing $formula...${NC}"
-        brew install "$formula"
+        if ! brew install "$formula"; then
+            echo -e "${RED}Failed to install $formula.${NC}"
+            (( failed++ ))
+        fi
     fi
 done
 
@@ -101,7 +111,10 @@ for cask in "${casks[@]}"; do
         echo -e "${GREEN}$cask is already installed.${NC}"
     else
         echo -e "${BLUE}Installing $cask...${NC}"
-        brew install --cask "$cask"
+        if ! brew install --cask "$cask"; then
+            echo -e "${RED}Failed to install $cask.${NC}"
+            (( failed++ ))
+        fi
     fi
 done
 
@@ -131,5 +144,12 @@ fi
 echo -e "${BLUE}Cleaning up...${NC}"
 brew cleanup
 
-echo -e "${GREEN}Setup complete! You may need to restart your terminal or computer.${NC}"
+if (( failed > 0 )); then
+    echo -e "${RED}$failed item(s) failed to install. Check the output above for details.${NC}"
+    exit 1
+else
+    touch "$HOME/.install-apps.done"
+    echo -e "${GREEN}Setup complete! You may need to restart your terminal or computer.${NC}"
+    exit 0
+fi
 {{- end }}
