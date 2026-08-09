@@ -142,3 +142,18 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("<Space>ca", vim.lsp.buf.code_action, "Code action")
   end,
 })
+
+-- ==========================================================
+-- 6. PLUGINS: lazy.nvim goes here (when ready)
+-- ----------------------------------------------------------
+-- 1. Install lazy.nvim once:
+--    git clone --filter=blob:none \
+--      https://github.com/folke/lazy.nvim.git \
+--      ~/.local/share/nvim/lazy/lazy.nvim
+-- 2. Bootstrap and add plugins here, e.g.:
+--    require("lazy").setup({
+--      { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+--      { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+--      -- ...
+--    })
+-- ==========================================================
