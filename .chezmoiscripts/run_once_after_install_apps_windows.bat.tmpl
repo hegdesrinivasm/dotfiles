@@ -2,9 +2,9 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set "APPS=Git.Git OpenJS.NodeJS.LTS EclipseAdoptium.Temurin.21.JDK BrechtSanders.WinLibs.POSIX.UCRT Mozilla.Firefox ente-io.auth-desktop Bitwarden.Bitwarden Valve.Steam Microsoft.VisualStudioCode Notion.Notion Tailscale.Tailscale Python.Python.3.12 GitHub.cli Docker.DockerDesktop Microsoft.PowerToys SST.opencode twpayne.chezmoi Nushell.Nushell Neovim.Neovim"
+set "APPS=Git.Git OpenJS.NodeJS.LTS EclipseAdoptium.Temurin.21.JDK BrechtSanders.WinLibs.POSIX.UCRT Mozilla.Firefox ente-io.auth-desktop Bitwarden.Bitwarden Valve.Steam Microsoft.VisualStudioCode Notion.Notion Tailscale.Tailscale Python.Python.3.12 GitHub.cli Docker.DockerDesktop Microsoft.PowerToys SST.opencode twpayne.chezmoi Nushell.Nushell Neovim.Neovim Ollama.Ollama GoLang.Go DEVCOM.Lua"
 
-echo [1/3] Checking for winget...
+echo [1/4] Checking for winget...
 where winget >nul 2>&1
 if %errorlevel% neq 0 (
     echo winget not found. Downloading App Installer...
@@ -24,14 +24,22 @@ if %errorlevel% neq 0 (
     )
 )
 
-echo [2/3] Installing apps from official winget repository [--source winget]...
+echo [2/4] Installing apps from official winget repository [--source winget]...
 for %%a in (%APPS%) do (
     echo Installing %%a...
     winget install --exact --id %%a --source winget --accept-package-agreements --accept-source-agreements
     echo(
 )
 
-echo [3/3] Installing pyenv-win...
+echo [3/4] Setting nushell as the default Windows Terminal profile...
+powershell -NoProfile -ExecutionPolicy Bypass -Command "& { $paths = @(($env:LOCALAPPDATA + '\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json'),($env:LOCALAPPDATA + '\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json'),($env:LOCALAPPDATA + '\Microsoft\Windows Terminal\settings.json')); $settingsPath = $paths | Where-Object { Test-Path $_ } | Select-Object -First 1; if (-not $settingsPath) { $settingsPath = $paths[0]; New-Item -ItemType Directory -Force -Path (Split-Path $settingsPath) | Out-Null; $guid = '{2b8e0a91-70a1-4e5f-a2c1-84b2b6e39e5f}'; $settings = [pscustomobject]@{ '$schema' = 'https://aka.ms/terminal-profiles-schema'; defaultProfile = $guid; profiles = [pscustomobject]@{ defaults = [pscustomobject]@{}; list = @([pscustomobject]@{ guid = $guid; name = 'Nu Shell'; commandline = 'nu.exe'; hidden = $false }) } }; $settings | ConvertTo-Json -Depth 20 | Set-Content -Path $settingsPath -Encoding UTF8; Write-Output 'Created Windows Terminal settings.json with nushell as the default profile.' } else { $raw = Get-Content -Path $settingsPath -Raw; $clean = $raw -replace '(?m)^\s*//.*$', ''; $settings = $clean | ConvertFrom-Json; $nu = $settings.profiles.list | Where-Object { ($_.commandline -match 'nu\.exe') -or ($_.name -match '^[Nn]u(?: ?[Ss]hell)?$') } | Select-Object -First 1; if ($nu) { $settings.defaultProfile = $nu.guid } else { $guid = '{2b8e0a91-70a1-4e5f-a2c1-84b2b6e39e5f}'; $settings.profiles.list += [pscustomobject]@{ guid = $guid; name = 'Nu Shell'; commandline = 'nu.exe'; hidden = $false }; $settings.defaultProfile = $guid }; $settings | ConvertTo-Json -Depth 20 | Set-Content -Path $settingsPath -Encoding UTF8; Write-Output 'nushell set as the default Windows Terminal profile.' } }"
+if !errorlevel! neq 0 (
+    echo Failed to set nushell as the default Windows Terminal profile.
+    pause
+    exit /b 1
+)
+
+echo [4/4] Installing pyenv-win...
 powershell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1' -OutFile '%TEMP%\install-pyenv-win.ps1'; & '%TEMP%\install-pyenv-win.ps1'"
 if !errorlevel! neq 0 (
     echo Failed to install pyenv-win. Try running as Administrator.
