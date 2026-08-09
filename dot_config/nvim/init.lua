@@ -72,3 +72,22 @@ vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase w
 
 -- Terminal
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
+-- ==========================================================
+-- 4. Autocmds
+-- ==========================================================
+local augroup = vim.api.nvim_create_augroup("nvim_init", { clear = true })
+
+-- Highlight yanked text
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = augroup,
+  callback = function()
+    vim.highlight.on_yank({ timeout = 150 })
+  end,
+})
+
+-- Rebalance splits on window resize
+vim.api.nvim_create_autocmd("VimResized", {
+  group = augroup,
+  command = "wincmd =",
+})
