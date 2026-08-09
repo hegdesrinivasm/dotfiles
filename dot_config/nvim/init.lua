@@ -91,3 +91,54 @@ vim.api.nvim_create_autocmd("VimResized", {
   group = augroup,
   command = "wincmd =",
 })
+
+-- ==========================================================
+-- 5. Built-in LSP (nvim >= 0.11)
+-- ----------------------------------------------------------
+-- Language servers must be installed separately, e.g.:
+--   lua_ls   -> `brew install lua-language-server` (or distro pkg)
+--   bashls   -> `npm install -g bash-language-server`
+--   pyright  -> `npm install -g pyright`
+--   ts_ls    -> `npm install -g typescript-language-server typescript`
+--   jsonls   -> `npm install -g vscode-langservers-extracted`
+--   yamlls   -> `npm install -g yaml-language-server`
+-- Check with `:checkhealth lsp`.
+-- ==========================================================
+vim.lsp.config("*", {
+  capabilities = {
+    textDocument = {
+      completion = {
+        completionItem = {
+          documentationFormat = { "markdown", "plaintext" },
+          snippetSupport = true,
+        },
+      },
+    },
+  },
+})
+
+vim.lsp.enable({
+  "lua_ls",
+  "bashls",
+  "pyright",
+  "ts_ls",
+  "jsonls",
+  "yamlls",
+})
+
+-- LSP keymaps, active only while a server is attached
+local lsp_group = vim.api.nvim_create_augroup("nvim_lsp", { clear = true })
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = lsp_group,
+  callback = function(event)
+    local map = function(keys, fn, desc)
+      vim.keymap.set("n", keys, fn, { buffer = event.buf, desc = "LSP: " .. desc })
+    end
+    map("K", vim.lsp.buf.hover, "Hover")
+    map("gd", vim.lsp.buf.definition, "Go to definition")
+    map("gr", vim.lsp.buf.references, "References")
+    map("<Space>rn", vim.lsp.buf.rename, "Rename")
+    map("<Space>ca", vim.lsp.buf.code_action, "Code action")
+  end,
+})
