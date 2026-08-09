@@ -157,6 +157,21 @@ install_fish() {
     info "Fish installed."
 }
 
+set_default_shell() {
+    local shell_path="/usr/bin/fish"
+
+    if [[ "$(getent passwd "$USER" | cut -d: -f7)" == "$shell_path" ]]; then
+        warn "Fish is already the default shell. Skipping."
+        return 0
+    fi
+
+    info "Setting Fish as the default shell..."
+    grep -q "^${shell_path}$" /etc/shells 2>/dev/null || echo "$shell_path" | sudo tee -a /etc/shells > /dev/null
+
+    sudo chsh -s "$shell_path" "$USER" || { error "Failed to set Fish as default shell"; return 1; }
+    info "Fish set as the default shell. Log out and back in to use it."
+}
+
 install_go() {
     if app_installed "go"; then
         warn "Go is already installed. Skipping."
@@ -240,6 +255,7 @@ main() {
     install_ghostty   || (( failed++ ))
     install_nvim      || (( failed++ ))
     install_fish      || (( failed++ ))
+    set_default_shell || (( failed++ ))
     install_go        || (( failed++ ))
     install_lua       || (( failed++ ))
     install_bitwarden || (( failed++ ))

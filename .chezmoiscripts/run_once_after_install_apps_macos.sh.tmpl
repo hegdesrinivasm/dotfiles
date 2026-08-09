@@ -106,7 +106,26 @@ for cask in "${casks[@]}"; do
 done
 
 # -----------------------------------------------------------------------------
-# 4. Cleanup
+# 4. Set Fish as the default shell
+# -----------------------------------------------------------------------------
+
+FISH_BIN="$(brew --prefix)/bin/fish"
+
+if [[ "$(dscl . -read "$HOME" UserShell 2>/dev/null | awk '{print $2}')" == "$FISH_BIN" ]]; then
+    echo -e "${GREEN}Fish is already the default shell.${NC}"
+else
+    if ! grep -qx "$FISH_BIN" /etc/shells 2>/dev/null; then
+        echo -e "${BLUE}Adding $FISH_BIN to /etc/shells...${NC}"
+        echo "$FISH_BIN" | sudo tee -a /etc/shells
+    fi
+
+    echo -e "${BLUE}Setting Fish as the default shell...${NC}"
+    sudo chsh -s "$FISH_BIN" "$USER" || { echo -e "${RED}Failed to set Fish as the default shell.${NC}"; exit 1; }
+    echo -e "${GREEN}Fish set as the default shell. Log out and back in to use it.${NC}"
+fi
+
+# -----------------------------------------------------------------------------
+# 5. Cleanup
 # -----------------------------------------------------------------------------
 
 echo -e "${BLUE}Cleaning up...${NC}"
