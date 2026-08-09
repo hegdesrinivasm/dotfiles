@@ -51,6 +51,7 @@ formulae=(
     pyenv
     pyenv-virtualenv
     openjdk
+    nushell
 )
 
 for formula in "${formulae[@]}"; do

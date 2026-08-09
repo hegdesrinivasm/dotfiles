@@ -1,7 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set "APPS=Mozilla.Firefox ente-io.auth-desktop Bitwarden.Bitwarden Valve.Steam Microsoft.VisualStudioCode Notion.Notion Tailscale.Tailscale OpenJS.NodeJS.LTS EclipseAdoptium.Temurin.21.JDK Python.Python.3.12 BrechtSanders.WinLibs.POSIX.UCRT GitHub.cli Docker.DockerDesktop Microsoft.PowerToys SST.opencode twpayne.chezmoi"
+set "APPS=Mozilla.Firefox ente-io.auth-desktop Bitwarden.Bitwarden Valve.Steam Microsoft.VisualStudioCode Notion.Notion Tailscale.Tailscale OpenJS.NodeJS.LTS EclipseAdoptium.Temurin.21.JDK Python.Python.3.12 BrechtSanders.WinLibs.POSIX.UCRT GitHub.cli Docker.DockerDesktop Microsoft.PowerToys SST.opencode twpayne.chezmoi Nushell.Nushell"
 
 echo [1/2] Checking for winget...
 where winget >nul 2>&1
