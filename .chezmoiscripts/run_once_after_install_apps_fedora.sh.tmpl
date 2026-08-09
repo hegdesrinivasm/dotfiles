@@ -43,7 +43,7 @@ preflight_check() {
     echo "   Pre-flight Status Check"
     echo "==================================="
     echo ""
-    local apps=("code" "opencode" "gh" "ollama" "nu" "ghostty" "chezmoi" "node" "java" "pyenv" "git")
+    local apps=("code" "opencode" "gh" "ollama" "nu" "ghostty" "chezmoi" "node" "java" "pyenv" "git" "nvim" "fish")
     for app in "${apps[@]}"; do
         if app_installed "$app"; then
             warn "$app is already installed."
@@ -165,6 +165,28 @@ install_ghostty() {
     info "Ghostty terminal installed."
 }
 
+install_nvim() {
+    if app_installed "nvim"; then
+        warn "Neovim is already installed. Skipping."
+        return 0
+    fi
+
+    info "Installing Neovim..."
+    dnf install -y -q neovim || { error "Failed to install Neovim"; return 1; }
+    info "Neovim installed."
+}
+
+install_fish() {
+    if app_installed "fish"; then
+        warn "Fish is already installed. Skipping."
+        return 0
+    fi
+
+    info "Installing Fish..."
+    dnf install -y -q fish || { error "Failed to install Fish"; return 1; }
+    info "Fish installed."
+}
+
 install_bitwarden() {
     if flatpak list --columns=application 2>/dev/null | grep -q "com.bitwarden.desktop"; then
         warn "Bitwarden is already installed. Skipping."
@@ -222,6 +244,8 @@ main() {
     install_ollama    || (( failed++ ))
     install_nushell   || (( failed++ ))
     install_ghostty   || (( failed++ ))
+    install_nvim      || (( failed++ ))
+    install_fish      || (( failed++ ))
     install_bitwarden || (( failed++ ))
     install_ente_auth || (( failed++ ))
     install_chezmoi   || (( failed++ ))
