@@ -1,6 +1,12 @@
-{{ if eq .chezmoi.os "windows" -}}
+{{ if and (eq .chezmoi.os "windows") (not (stat (joinPath .chezmoi.homeDir ".install-apps.done"))) -}}
 @echo off
 setlocal enabledelayedexpansion
+
+where nu >nul 2>&1
+if !errorlevel! equ 0 (
+    type nul > "%USERPROFILE%\.install-apps.done"
+    exit /b 0
+)
 
 set "APPS=Git.Git OpenJS.NodeJS.LTS EclipseAdoptium.Temurin.21.JDK BrechtSanders.WinLibs.POSIX.UCRT Mozilla.Firefox ente-io.auth-desktop Bitwarden.Bitwarden Valve.Steam Microsoft.VisualStudioCode Notion.Notion Tailscale.Tailscale Python.Python.3.12 GitHub.cli Docker.DockerDesktop Microsoft.PowerToys SST.opencode twpayne.chezmoi Nushell.Nushell Neovim.Neovim Ollama.Ollama GoLang.Go DEVCOM.Lua"
 
@@ -24,10 +30,15 @@ if %errorlevel% neq 0 (
     )
 )
 
+set "failed=0"
+
 echo [2/4] Installing apps from official winget repository [--source winget]...
 for %%a in (%APPS%) do (
     echo Installing %%a...
     winget install --exact --id %%a --source winget --accept-package-agreements --accept-source-agreements
+    if !errorlevel! neq 0 (
+        set /a failed+=1
+    )
     echo(
 )
 
@@ -47,6 +58,12 @@ if !errorlevel! neq 0 (
     exit /b 1
 )
 
+if !failed! gtr 0 (
+    echo !failed! application(s) failed to install. Check the output above for details.
+    exit /b 1
+)
+
+type nul > "%USERPROFILE%\.install-apps.done"
 echo All done!
 pause
 {{- end }}

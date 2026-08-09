@@ -1,6 +1,11 @@
-{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "manjaro") -}}
+{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "manjaro") (not (stat (joinPath .chezmoi.homeDir ".install-apps.done"))) -}}
 #!/usr/bin/env zsh
 set -o pipefail
+
+if command -v fish >/dev/null 2>&1 || command -v nu >/dev/null 2>&1; then
+    touch "$HOME/.install-apps.done"
+    exit 0
+fi
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -268,6 +273,7 @@ main() {
         exit 1
     else
         info "All applications installed successfully!"
+        touch "$HOME/.install-apps.done"
         exit 0
     fi
 }

@@ -1,6 +1,11 @@
-{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "fedora") -}}
+{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "fedora") (not (stat (joinPath .chezmoi.homeDir ".install-apps.done"))) -}}
 #!/usr/bin/env bash
 set -o pipefail
+
+if command -v fish >/dev/null 2>&1 || command -v nu >/dev/null 2>&1; then
+    touch "$HOME/.install-apps.done"
+    exit 0
+fi
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -296,8 +301,11 @@ main() {
     echo ""
     if (( failed > 0 )); then
         error "$failed application(s) failed to install. Check the output above for details."
+        exit 1
     else
         info "All applications installed successfully!"
+        touch "$HOME/.install-apps.done"
+        exit 0
     fi
     echo ""
 }
