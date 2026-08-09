@@ -43,7 +43,7 @@ preflight_check() {
     echo "   Pre-flight Status Check"
     echo "==================================="
     echo ""
-    local apps=("code" "opencode" "gh" "ollama" "nu" "ghostty" "chezmoi" "node" "java" "pyenv" "git" "nvim" "fish")
+    local apps=("code" "opencode" "gh" "ollama" "nu" "ghostty" "chezmoi" "node" "java" "pyenv" "git" "go" "lua" "nvim" "fish")
     for app in "${apps[@]}"; do
         if app_installed "$app"; then
             warn "$app is already installed."
@@ -187,6 +187,28 @@ install_fish() {
     info "Fish installed."
 }
 
+install_go() {
+    if app_installed "go"; then
+        warn "Go is already installed. Skipping."
+        return 0
+    fi
+
+    info "Installing Go..."
+    dnf install -y -q golang || { error "Failed to install Go"; return 1; }
+    info "Go installed."
+}
+
+install_lua() {
+    if app_installed "lua"; then
+        warn "Lua is already installed. Skipping."
+        return 0
+    fi
+
+    info "Installing Lua..."
+    dnf install -y -q lua || { error "Failed to install Lua"; return 1; }
+    info "Lua installed."
+}
+
 install_bitwarden() {
     if flatpak list --columns=application 2>/dev/null | grep -q "com.bitwarden.desktop"; then
         warn "Bitwarden is already installed. Skipping."
@@ -246,6 +268,8 @@ main() {
     install_ghostty   || (( failed++ ))
     install_nvim      || (( failed++ ))
     install_fish      || (( failed++ ))
+    install_go        || (( failed++ ))
+    install_lua       || (( failed++ ))
     install_bitwarden || (( failed++ ))
     install_ente_auth || (( failed++ ))
     install_chezmoi   || (( failed++ ))
