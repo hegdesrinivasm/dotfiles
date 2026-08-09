@@ -24,3 +24,7 @@ Always use conventional commit messages, e.g. `feat:`, `fix:`, `chore:`, `docs:`
 ### Opening PRs
 
 When opening a pull request, always ask the user where to target it: **upstream** or **origin**.
+
+### Somethings to note: 
+
+- Never stage any superpower spec files you write for the sessions. Keep them strictly local.
