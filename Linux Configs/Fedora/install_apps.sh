@@ -42,7 +42,7 @@ preflight_check() {
     echo "   Pre-flight Status Check"
     echo "==================================="
     echo ""
-    local apps=("code" "opencode" "gh" "ollama" "nu" "ghostty" "chezmoi")
+    local apps=("code" "opencode" "gh" "ollama" "nu" "ghostty" "chezmoi" "node" "java" "pyenv" "git")
     for app in "${apps[@]}"; do
         if app_installed "$app"; then
             warn "$app is already installed."
@@ -60,6 +60,28 @@ preflight_check() {
         fi
     done
     echo ""
+}
+
+install_dev_tools() {
+    info "Installing development tools..."
+    dnf group install -y development-tools \
+        || { error "Failed to install development tools group"; return 1; }
+
+    dnf install -y -q nodejs java-latest-openjdk zlib-devel bzip2 bzip2-devel \
+        readline-devel sqlite-devel openssl-devel tk-devel libffi-devel xz-devel \
+        || { error "Failed to install Node.js, OpenJDK, or pyenv build dependencies"; return 1; }
+
+    if app_installed "pyenv"; then
+        warn "pyenv is already installed. Skipping."
+    else
+        info "Installing pyenv..."
+        local pyenv_user="${SUDO_USER:-$USER}"
+        sudo -H -u "$pyenv_user" bash -c 'curl -fsSL https://pyenv.run | bash' \
+            || { error "Failed to install pyenv"; return 1; }
+        info "pyenv installed. Restart your shell to use it."
+    fi
+
+    info "Development tools installed."
 }
 
 install_vscode() {
@@ -190,6 +212,8 @@ main() {
     local failed=0
 
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+    install_dev_tools || { error "Failed to install development tools. Aborting."; exit 1; }
 
     install_vscode    || (( failed++ ))
     install_opencode  || (( failed++ ))

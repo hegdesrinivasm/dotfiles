@@ -1,9 +1,9 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set "APPS=Mozilla.Firefox ente-io.auth-desktop Bitwarden.Bitwarden Valve.Steam Microsoft.VisualStudioCode Notion.Notion Tailscale.Tailscale OpenJS.NodeJS.LTS EclipseAdoptium.Temurin.21.JDK Python.Python.3.12 BrechtSanders.WinLibs.POSIX.UCRT GitHub.cli Docker.DockerDesktop Microsoft.PowerToys SST.opencode twpayne.chezmoi Nushell.Nushell"
+set "APPS=Git.Git OpenJS.NodeJS.LTS EclipseAdoptium.Temurin.21.JDK BrechtSanders.WinLibs.POSIX.UCRT Mozilla.Firefox ente-io.auth-desktop Bitwarden.Bitwarden Valve.Steam Microsoft.VisualStudioCode Notion.Notion Tailscale.Tailscale Python.Python.3.12 GitHub.cli Docker.DockerDesktop Microsoft.PowerToys SST.opencode twpayne.chezmoi Nushell.Nushell"
 
-echo [1/2] Checking for winget...
+echo [1/3] Checking for winget...
 where winget >nul 2>&1
 if %errorlevel% neq 0 (
     echo winget not found. Downloading App Installer...
@@ -23,11 +23,19 @@ if %errorlevel% neq 0 (
     )
 )
 
-echo [2/2] Installing apps from official winget repository [--source winget]...
+echo [2/3] Installing apps from official winget repository [--source winget]...
 for %%a in (%APPS%) do (
     echo Installing %%a...
     winget install --exact --id %%a --source winget --accept-package-agreements --accept-source-agreements
     echo(
+)
+
+echo [3/3] Installing pyenv-win...
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1' -OutFile '%TEMP%\install-pyenv-win.ps1'; & '%TEMP%\install-pyenv-win.ps1'"
+if !errorlevel! neq 0 (
+    echo Failed to install pyenv-win. Try running as Administrator.
+    pause
+    exit /b 1
 )
 
 echo All done!

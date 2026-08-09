@@ -42,7 +42,7 @@ preflight_check() {
     echo "   Pre-flight Status Check"
     echo "==================================="
     echo ""
-    local apps=("code" "opencode" "gh" "ollama" "nu" "ghostty" "chezmoi")
+    local apps=("code" "opencode" "gh" "ollama" "nu" "ghostty" "chezmoi" "node" "java" "pyenv")
     for app in "${apps[@]}"; do
         if app_installed "$app"; then
             warn "$app is already installed."
@@ -60,6 +60,12 @@ preflight_check() {
         fi
     done
     echo ""
+}
+
+install_dev_tools() {
+    info "Installing development tools..."
+    pamac install --no-confirm nodejs npm pyenv jdk-openjdk || { error "Failed to install development tools"; return 1; }
+    info "Development tools installed."
 }
 
 install_vscode() {
@@ -91,7 +97,7 @@ install_gh_cli() {
     fi
 
     info "Installing GitHub CLI..."
-    pamac install --no-confirm gh || { error "Failed to install GitHub CLI"; return 1; }
+    pamac install --no-confirm github-cli || { error "Failed to install GitHub CLI"; return 1; }
     info "GitHub CLI installed."
 }
 
@@ -178,6 +184,8 @@ main() {
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
     pamac install --no-confirm base-devel || { error "Failed to install base-devel (required for AUR builds). Aborting."; exit 1; }
+
+    install_dev_tools || { error "Failed to install development tools. Aborting."; exit 1; }
 
     install_vscode    || (( failed++ ))
     install_opencode  || (( failed++ ))
