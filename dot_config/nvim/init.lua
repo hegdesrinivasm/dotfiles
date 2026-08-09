@@ -30,10 +30,31 @@ vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
 
 -- ==========================================================
--- 2. Colorscheme (built-in)
+-- 2. Plugins & Colorscheme
 -- ==========================================================
-vim.cmd.colorscheme("habamax")
--- Alternatives: vim.cmd.colorscheme("gruvbox") or ("desert")
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = { style = "night" },
+  },
+})
+
+vim.cmd.colorscheme("tokyonight")
 
 -- ==========================================================
 -- 3. Keymaps
@@ -180,16 +201,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 -- ==========================================================
--- 6. PLUGINS: lazy.nvim goes here (when ready)
+-- 6. More plugins
 -- ----------------------------------------------------------
--- 1. Install lazy.nvim once:
---    git clone --filter=blob:none \
---      https://github.com/folke/lazy.nvim.git \
---      ~/.local/share/nvim/lazy/lazy.nvim
--- 2. Bootstrap and add plugins here, e.g.:
---    require("lazy").setup({
---      { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
---      { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
---      -- ...
---    })
+-- Add new plugins to the require("lazy").setup({ ... }) list
+-- in section 2.
 -- ==========================================================
