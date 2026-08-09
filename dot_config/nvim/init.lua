@@ -117,6 +117,42 @@ vim.lsp.config("*", {
   },
 })
 
+-- Server configs are hand-written here because nvim core ships no
+-- server definitions (that normally comes from the nvim-lspconfig plugin).
+vim.lsp.config("lua_ls", {
+  cmd = { "lua-language-server" },
+  filetypes = { "lua" },
+  root_markers = { ".luarc.json", ".luacheckrc", ".git" },
+})
+
+vim.lsp.config("bashls", {
+  cmd = { "bash-language-server", "start" },
+  filetypes = { "sh", "bash", "zsh" },
+  root_markers = { ".git" },
+})
+
+vim.lsp.config("pyright", {
+  cmd = { "pyright-langserver", "--stdio" },
+  filetypes = { "python" },
+  root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" },
+})
+
+vim.lsp.config("ts_ls", {
+  cmd = { "typescript-language-server", "--stdio" },
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+  root_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" },
+})
+
+vim.lsp.config("jsonls", {
+  cmd = { "vscode-json-languageserver", "--stdio" },
+  filetypes = { "json", "jsonc" },
+})
+
+vim.lsp.config("yamlls", {
+  cmd = { "yaml-language-server", "--stdio" },
+  filetypes = { "yaml", "yml" },
+})
+
 vim.lsp.enable({
   "lua_ls",
   "bashls",
