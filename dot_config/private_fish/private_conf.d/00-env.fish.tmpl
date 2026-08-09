@@ -1,0 +1,27 @@
+# Fish environment — autoloaded via conf.d on every fish startup.
+# Mirrors ~/.config/shell/env.sh (bash/zsh/profile). Keep in sync.
+
+set -gx PYENV_ROOT "$HOME/.pyenv"
+
+{{ if eq .chezmoi.os "darwin" -}}
+# Homebrew (macOS) — prepended for priority
+fish_add_path --path --prepend /opt/homebrew/bin
+fish_add_path --path --prepend /opt/homebrew/sbin
+fish_add_path --path --prepend /opt/homebrew/opt/openjdk/bin
+
+{{ end -}}
+# pyenv — Python version manager
+fish_add_path --path --prepend "$PYENV_ROOT/bin"
+fish_add_path --path --prepend "$PYENV_ROOT/shims"
+
+# opencode
+fish_add_path --path --append "$HOME/.opencode/bin"
+
+# chezmoi / local bin
+fish_add_path --path --append "$HOME/.local/bin"
+
+# pyenv shell integration
+if command -q pyenv
+    pyenv init - fish | source
+    pyenv virtualenv-init - | source
+end
