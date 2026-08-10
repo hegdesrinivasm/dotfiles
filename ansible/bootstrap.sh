@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_URL="https://github.com/hegdesrinivasm/dotfiles.git"
+BRANCH="chezmoi"
+CHECKOUT_DIR="${HOME}/dotfiles"
+PLAYBOOK="ansible/playbooks/site.yml"
+
+os="$(uname -s)"
+
+install_ansible() {
+    case "${os}" in
+        Linux)
+            if command -v pacman >/dev/null 2>&1; then
+                sudo pacman -S --needed --noconfirm python python-pip ansible
+            elif command -v dnf >/dev/null 2>&1; then
+                sudo dnf install -y python3 python3-pip ansible-core
+            else
+                echo "Unsupported Linux distribution" >&2
+                exit 1
+            fi
+            ;;
+        Darwin)
+            if ! command -v python3 >/dev/null 2>&1; then
+                echo "python3 not found; install Xcode Command Line Tools first" >&2
+                exit 1
+            fi
+            python3 -m pip install --user ansible \
+                || python3 -m pip install --user --break-system-packages ansible
+            ;;
+        *)
+            echo "Unsupported OS: ${os}" >&2
+            exit 1
+            ;;
+    esac
+}
+
+main() {
+    if ! command -v ansible-playbook >/dev/null 2>&1; then
+        install_ansible
+    fi
+
+    if [[ -d "${CHECKOUT_DIR}/.git" ]]; then
+        git -C "${CHECKOUT_DIR}" fetch --quiet origin "${BRANCH}"
+        git -C "${CHECKOUT_DIR}" checkout --quiet "${BRANCH}"
+        git -C "${CHECKOUT_DIR}" pull --quiet --ff-only origin "${BRANCH}"
+    else
+        git clone --quiet --branch "${BRANCH}" --single-branch "${REPO_URL}" "${CHECKOUT_DIR}"
+    fi
+
+    ansible-galaxy collection install -r "${CHECKOUT_DIR}/ansible/requirements.yml"
+
+    # Cache sudo credentials so the playbook's become tasks run non-interactively.
+    if ! sudo -n true 2>/dev/null; then
+        sudo -v
+    fi
+
+    (cd "${CHECKOUT_DIR}" && ansible-playbook -i localhost, "${PLAYBOOK}")
+}
+
+main "$@"
