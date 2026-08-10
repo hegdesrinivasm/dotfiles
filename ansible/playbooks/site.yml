@@ -8,7 +8,7 @@
       ansible.builtin.set_fact:
         os_var_file: >-
           {{ 'windows' if ansible_facts['os_family'] == 'Windows'
-             else 'manjaro' if ansible_facts['distribution'] == 'Manjaro'
+             else 'manjaro' if ansible_facts['distribution'] in ['Manjaro', 'Archlinux']
              else 'fedora' if ansible_facts['distribution'] == 'Fedora'
              else 'macos' if ansible_facts['os_family'] == 'Darwin'
              else 'unsupported' }}
