@@ -1,1 +1,31 @@
 ---
+- name: Install chezmoi (Manjaro)
+  community.general.pacman:
+    name: chezmoi
+    state: present
+  become: true
+  when: os_var_file == 'manjaro'
+
+- name: Install chezmoi (Fedora)
+  ansible.builtin.dnf:
+    name: chezmoi
+    state: present
+  become: true
+  when: os_var_file == 'fedora'
+
+- name: Install chezmoi (macOS)
+  community.general.homebrew:
+    name: chezmoi
+    state: present
+  when: os_var_file == 'macos'
+
+- name: Check existing chezmoi state
+  ansible.builtin.stat:
+    path: "{{ chezmoi_state_dir }}"
+  register: chezmoi_state
+
+- name: Initialize dotfiles with chezmoi
+  ansible.builtin.command:
+    cmd: "chezmoi init --apply {{ chezmoi_repo_url }}"
+  when:
+    - not chezmoi_state.stat.exists
