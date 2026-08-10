@@ -1,26 +1,4 @@
 ---
-- name: Check Homebrew (Apple Silicon)
-  ansible.builtin.stat:
-    path: /opt/homebrew/bin/brew
-  register: brew_arm
-  when: os_var_file == 'macos'
-
-- name: Check Homebrew (Intel)
-  ansible.builtin.stat:
-    path: /usr/local/bin/brew
-  register: brew_x86
-  when: os_var_file == 'macos'
-
-- name: Bootstrap Homebrew
-  ansible.builtin.shell:
-    cmd: NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  args:
-    warn: false
-  when:
-    - os_var_file == 'macos'
-    - not brew_arm.stat.exists
-    - not brew_x86.stat.exists
-
 - name: Install brew casks
   community.general.homebrew:
     name: "{{ brew_casks }}"
