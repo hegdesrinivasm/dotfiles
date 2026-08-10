@@ -1,1 +1,51 @@
 ---
+- name: Set nushell as default Windows Terminal profile
+  ansible.windows.win_powershell:
+    script: |
+      $paths = @(
+        "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json",
+        "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json",
+        "$env:LOCALAPPDATA\Microsoft\Windows Terminal\settings.json"
+      )
+      $settingsPath = $paths | Where-Object { Test-Path $_ } | Select-Object -First 1
+      if (-not $settingsPath) {
+        $settingsPath = $paths[0]
+        New-Item -ItemType Directory -Force -Path (Split-Path $settingsPath) | Out-Null
+        $guid = '{2b8e0a91-70a1-4e5f-a2c1-84b2b6e39e5f}'
+        $settings = [pscustomobject]@{
+          '$schema' = 'https://aka.ms/terminal-profiles-schema'
+          defaultProfile = $guid
+          profiles = [pscustomobject]@{
+            defaults = [pscustomobject]@{}
+            list = @([pscustomobject]@{
+              guid = $guid
+              name = 'Nu Shell'
+              commandline = 'nu.exe'
+              hidden = $false
+            })
+          }
+        }
+        $settings | ConvertTo-Json -Depth 20 | Set-Content -Path $settingsPath -Encoding UTF8
+        Write-Output 'Created Windows Terminal settings.json with nushell as the default profile.'
+      } else {
+        $raw = Get-Content -Path $settingsPath -Raw
+        $clean = $raw -replace '(?m)^\s*//.*$', ''
+        $settings = $clean | ConvertFrom-Json
+        $nu = $settings.profiles.list | Where-Object {
+          ($_.commandline -match 'nu\.exe') -or ($_.name -match '^[Nn]u(?: ?[Ss]hell)?$')
+        } | Select-Object -First 1
+        if ($nu) {
+          $settings.defaultProfile = $nu.guid
+        } else {
+          $guid = '{2b8e0a91-70a1-4e5f-a2c1-84b2b6e39e5f}'
+          $settings.profiles.list += [pscustomobject]@{
+            guid = $guid
+            name = 'Nu Shell'
+            commandline = 'nu.exe'
+            hidden = $false
+          }
+          $settings.defaultProfile = $guid
+        }
+        $settings | ConvertTo-Json -Depth 20 | Set-Content -Path $settingsPath -Encoding UTF8
+        Write-Output 'nushell set as the default Windows Terminal profile.'
+      }

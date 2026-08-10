@@ -1,1 +1,41 @@
 ---
+- name: Get Homebrew prefix (macOS)
+  ansible.builtin.command: brew --prefix
+  register: brew_prefix
+  changed_when: false
+  when: os_var_file == 'macos'
+
+- name: Set fish shell path (macOS)
+  ansible.builtin.set_fact:
+    fish_shell_path: "{{ brew_prefix.stdout }}/bin/fish"
+  when: os_var_file == 'macos'
+
+- name: Set fish shell path (Linux)
+  ansible.builtin.set_fact:
+    fish_shell_path: /usr/bin/fish
+  when: os_var_file in ['manjaro', 'fedora']
+
+- name: Add fish to /etc/shells (Unix)
+  ansible.builtin.lineinfile:
+    path: /etc/shells
+    line: "{{ fish_shell_path }}"
+  become: true
+  when: os_var_file != 'windows'
+
+- name: Set fish as default shell (Unix)
+  ansible.builtin.user:
+    name: "{{ ansible_env.USER }}"
+    shell: "{{ fish_shell_path }}"
+  become: true
+  when: os_var_file != 'windows'
+
+- name: Include Windows Terminal tasks
+  ansible.builtin.include_tasks: windows-terminal.yml
+  when: os_var_file == 'windows'
+
+- name: Ensure sshd service is running (Windows)
+  ansible.windows.win_service:
+    name: sshd
+    start_mode: auto
+    state: started
+  when: os_var_file == 'windows'
