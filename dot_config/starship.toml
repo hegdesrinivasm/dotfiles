@@ -4,14 +4,19 @@ add_newline = true
 palette = "spiderman"
 
 format = """
+[](fg:blue)\
 $directory\
+[](fg:blue bg:red)\
 $git_branch\
 $git_status\
+[](fg:red bg:light_blue)\
 $python\
 $nodejs\
 $ruby\
 $java\
-$docker_context
+[](fg:light_blue bg:gray)\
+$docker_context\
+[ ](fg:gray)
 $character"""
 
 right_format = "$cmd_duration$time"
@@ -19,6 +24,7 @@ right_format = "$cmd_duration$time"
 [palettes.spiderman]
 fg = "#e3e3e3"
 bright = "#fffef6"
+black = "#1b1d1e"
 gray = "#505354"
 red = "#e60813"
 bright_red = "#ff0325"
@@ -35,18 +41,18 @@ disabled = true
 truncation_length = 3
 truncation_symbol = ".../"
 read_only = " readonly"
-read_only_style = "gray"
-format = "[$path]($style)[$read_only]($read_only_style) "
-style = "blue"
+read_only_style = "bg:blue fg:bright"
+format = "[ $path ]($style)[$read_only]($read_only_style)"
+style = "bg:blue fg:bright"
 
 [git_branch]
 symbol = ""
-format = "[on $symbol$branch]($style) "
-style = "light_blue"
+format = "[ $symbol$branch ]($style)"
+style = "bg:red fg:bright"
 
 [git_status]
-format = "([\\[$all_status$ahead_behind\\]]($style) )"
-style = "red"
+format = "[ $all_status$ahead_behind ]($style)"
+style = "bg:red fg:bright"
 conflicted = "≈"
 ahead = "⇡"
 behind = "⇣"
@@ -58,29 +64,29 @@ renamed = "»"
 deleted = "✘"
 
 [python]
-format = "[$symbol$version]($style) "
+format = "[ $symbol$version ]($style)"
 symbol = ""
-style = "red"
+style = "bg:light_blue fg:black"
 
 [nodejs]
-format = "[$symbol$version]($style) "
+format = "[ $symbol$version ]($style)"
 symbol = ""
-style = "blue"
+style = "bg:light_blue fg:black"
 
 [ruby]
-format = "[$symbol$version]($style) "
+format = "[ $symbol$version ]($style)"
 symbol = ""
-style = "blue_2"
+style = "bg:light_blue fg:black"
 
 [java]
-format = "[$symbol$version]($style) "
+format = "[ $symbol$version ]($style)"
 symbol = ""
-style = "light_red"
+style = "bg:light_blue fg:black"
 
 [docker_context]
-format = "via [$symbol$context]($style) "
+format = "[ $symbol$context ]($style)"
 symbol = ""
-style = "gray"
+style = "bg:gray fg:bright"
 
 [cmd_duration]
 min_time = 2_000
