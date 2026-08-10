@@ -1,0 +1,34 @@
+---
+os_var_file: macos
+brew_formulae:
+  - python
+  - git
+  - java
+  - pyenv
+  - pyenv-virtualenv
+  - openjdk
+  - nushell
+  - neovim
+  - fish
+  - node
+  - ollama
+  - go
+  - lua
+brew_casks:
+  - visual-studio-code
+  - notion
+  - discord
+  - signal
+  - caffeine
+  - raycast
+  - vlc
+  - ticktick
+  - ente-auth
+  - zotero
+  - cleanupbuddy
+  - tailscale-app
+  - affinity
+  - steam
+  - shottr
+  - zen
+chezmoi_state_dir: "{{ ansible_env.HOME }}/.local/share/chezmoi"

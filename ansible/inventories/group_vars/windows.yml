@@ -1,0 +1,26 @@
+---
+os_var_file: windows
+winget_apps:
+  - Git.Git
+  - OpenJS.NodeJS.LTS
+  - EclipseAdoptium.Temurin.21.JDK
+  - BrechtSanders.WinLibs.POSIX.UCRT
+  - Mozilla.Firefox
+  - ente-io.auth-desktop
+  - Bitwarden.Bitwarden
+  - Valve.Steam
+  - Microsoft.VisualStudioCode
+  - Notion.Notion
+  - Tailscale.Tailscale
+  - Python.Python.3.12
+  - GitHub.cli
+  - Docker.DockerDesktop
+  - Microsoft.PowerToys
+  - SST.opencode
+  - twpayne.chezmoi
+  - Nushell.Nushell
+  - Neovim.Neovim
+  - Ollama.Ollama
+  - GoLang.Go
+  - DEVCOM.Lua
+chezmoi_state_dir: "{{ ansible_env.USERPROFILE }}\\AppData\\Local\\chezmoi"

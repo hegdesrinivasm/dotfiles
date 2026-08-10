@@ -1,0 +1,24 @@
+---
+os_var_file: manjaro
+cli_packages:
+  - nodejs
+  - npm
+  - jdk-openjdk
+  - go
+  - lua
+  - nushell
+  - ghostty
+  - neovim
+  - fish
+  - git
+  - curl
+  - base-devel
+  - github-cli
+  - ollama
+  - tailscale
+flatpak_apps:
+  - com.bitwarden.desktop
+  - io.ente.auth
+aur_packages:
+  - visual-studio-code-bin
+chezmoi_state_dir: "{{ ansible_env.HOME }}/.local/share/chezmoi"
