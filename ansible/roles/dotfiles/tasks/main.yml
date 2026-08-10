@@ -22,13 +22,13 @@
 - name: Check existing chezmoi state (Unix)
   ansible.builtin.stat:
     path: "{{ chezmoi_state_dir }}"
-  register: chezmoi_state
+  register: chezmoi_state_unix
   when: os_var_file != 'windows'
 
 - name: Check existing chezmoi state (Windows)
   ansible.windows.win_stat:
     path: "{{ chezmoi_state_dir }}"
-  register: chezmoi_state
+  register: chezmoi_state_win
   when: os_var_file == 'windows'
 
 - name: Initialize dotfiles with chezmoi (Unix)
@@ -36,11 +36,11 @@
     cmd: "chezmoi init --apply {{ chezmoi_repo_url }}"
   when:
     - os_var_file != 'windows'
-    - not chezmoi_state.stat.exists
+    - not (chezmoi_state_unix.stat.exists | default(false))
 
 - name: Initialize dotfiles with chezmoi (Windows)
   ansible.windows.win_command:
     cmd: "chezmoi init --apply {{ chezmoi_repo_url }}"
   when:
     - os_var_file == 'windows'
-    - not chezmoi_state.stat.exists
+    - not (chezmoi_state_win.stat.exists | default(false))
