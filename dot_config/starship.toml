@@ -4,7 +4,6 @@ add_newline = true
 palette = "spiderman"
 
 format = """
-[](fg:blue)\
 $directory\
 [](fg:blue bg:red)\
 $git_branch\
