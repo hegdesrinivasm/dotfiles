@@ -1,13 +1,103 @@
-# Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-# Inserts a blank line between shell prompts
 add_newline = true
+palette = "spiderman"
 
-# Replace the '❯' symbol in the prompt with '➜'
-[character] # The name of the module we are configuring is 'character'
-success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+format = """
+[](fg:blue)\
+$directory\
+[](fg:blue bg:red)\
+$git_branch\
+$git_status\
+[](fg:red bg:light_blue)\
+$python\
+$nodejs\
+$ruby\
+$java\
+[](fg:light_blue bg:gray)\
+$docker_context\
+[ ](fg:gray)
+$character"""
 
-# Disable the package module, hiding it from the prompt completely
+right_format = "$cmd_duration$time"
+
+[palettes.spiderman]
+fg = "#e3e3e3"
+bright = "#fffef6"
+black = "#1b1d1e"
+gray = "#505354"
+red = "#e60813"
+bright_red = "#ff0325"
+light_red = "#e24756"
+blue = "#2c3fff"
+blue_2 = "#1d50ff"
+light_blue = "#6184ff"
+mid_blue = "#747cff"
+
 [package]
 disabled = true
+
+[directory]
+truncation_length = 3
+truncation_symbol = ".../"
+read_only = " readonly"
+read_only_style = "bg:blue fg:bright"
+format = "[ $path ]($style)[$read_only]($read_only_style)"
+style = "bg:blue fg:bright"
+
+[git_branch]
+symbol = ""
+format = "[ $symbol$branch ]($style)"
+style = "bg:red fg:bright"
+
+[git_status]
+format = "[ $all_status$ahead_behind ]($style)"
+style = "bg:red fg:bright"
+conflicted = "≈"
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+untracked = "?"
+staged = "+"
+modified = "~"
+renamed = "»"
+deleted = "✘"
+
+[python]
+format = "[ $symbol$version ]($style)"
+symbol = ""
+style = "bg:light_blue fg:black"
+
+[nodejs]
+format = "[ $symbol$version ]($style)"
+symbol = ""
+style = "bg:light_blue fg:black"
+
+[ruby]
+format = "[ $symbol$version ]($style)"
+symbol = ""
+style = "bg:light_blue fg:black"
+
+[java]
+format = "[ $symbol$version ]($style)"
+symbol = ""
+style = "bg:light_blue fg:black"
+
+[docker_context]
+format = "[ $symbol$context ]($style)"
+symbol = ""
+style = "bg:gray fg:bright"
+
+[cmd_duration]
+min_time = 2_000
+format = "took [$duration](gray) "
+
+[time]
+time_format = "%H:%M"
+format = "[$time]($style) "
+style = "gray"
+disabled = false
+
+[character]
+success_symbol = "[➜](bold blue)"
+error_symbol = "[✗](bold bright_red)"
