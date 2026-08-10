@@ -12,6 +12,9 @@
              else 'fedora' if ansible_facts['distribution'] == 'Fedora'
              else 'macos' if ansible_facts['os_family'] == 'Darwin'
              else 'unsupported' }}
+    - name: Load global variables
+      ansible.builtin.include_vars:
+        file: "{{ playbook_dir }}/../inventories/group_vars/all.yml"
     - name: Load per-OS variables
       ansible.builtin.include_vars:
         file: "{{ playbook_dir }}/../inventories/group_vars/{{ os_var_file }}.yml"
