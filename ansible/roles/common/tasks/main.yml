@@ -1,1 +1,41 @@
 ---
+- name: Install CLI packages (Manjaro)
+  community.general.pacman:
+    name: "{{ cli_packages }}"
+    state: present
+  become: true
+  when: os_var_file == 'manjaro'
+
+- name: Install development tools group (Fedora)
+  ansible.builtin.dnf:
+    name: "{{ development_group }}"
+    state: present
+  become: true
+  when: os_var_file == 'fedora'
+
+- name: Install CLI packages (Fedora)
+  ansible.builtin.dnf:
+    name: "{{ cli_packages }}"
+    state: present
+  become: true
+  when: os_var_file == 'fedora'
+
+- name: Install CLI packages (macOS)
+  community.general.homebrew:
+    name: "{{ brew_formulae }}"
+    state: present
+  when: os_var_file == 'macos'
+
+- name: Install pyenv
+  ansible.builtin.git:
+    repo: https://github.com/pyenv/pyenv.git
+    dest: "{{ ansible_env.HOME }}/.pyenv"
+    version: master
+  when: os_var_file in ['manjaro', 'fedora']
+
+- name: Install pyenv-virtualenv
+  ansible.builtin.git:
+    repo: https://github.com/pyenv/pyenv-virtualenv.git
+    dest: "{{ ansible_env.HOME }}/.pyenv/plugins/pyenv-virtualenv"
+    version: master
+  when: os_var_file in ['manjaro', 'fedora']
