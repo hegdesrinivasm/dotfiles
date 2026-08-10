@@ -11,7 +11,8 @@ $python\
 $nodejs\
 $ruby\
 $java\
-$docker_context\
+$docker_context
+
 $character"""
 
 right_format = "$cmd_duration$time"
