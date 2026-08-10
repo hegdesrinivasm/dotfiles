@@ -26,16 +26,32 @@
     state: present
   when: os_var_file == 'macos'
 
+- name: Check pyenv directory
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.pyenv"
+  register: pyenv_dir
+  when: os_var_file in ['manjaro', 'fedora']
+
+- name: Check pyenv git repo
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.pyenv/.git"
+  register: pyenv_git
+  when: os_var_file in ['manjaro', 'fedora']
+
 - name: Install pyenv
   ansible.builtin.git:
     repo: https://github.com/pyenv/pyenv.git
     dest: "{{ ansible_env.HOME }}/.pyenv"
     version: master
-  when: os_var_file in ['manjaro', 'fedora']
+  when:
+    - os_var_file in ['manjaro', 'fedora']
+    - not pyenv_dir.stat.exists or pyenv_git.stat.exists
 
 - name: Install pyenv-virtualenv
   ansible.builtin.git:
     repo: https://github.com/pyenv/pyenv-virtualenv.git
     dest: "{{ ansible_env.HOME }}/.pyenv/plugins/pyenv-virtualenv"
     version: master
-  when: os_var_file in ['manjaro', 'fedora']
+  when:
+    - os_var_file in ['manjaro', 'fedora']
+    - not pyenv_dir.stat.exists or pyenv_git.stat.exists
