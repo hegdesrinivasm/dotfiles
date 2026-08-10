@@ -1,1 +1,148 @@
 ---
+- name: Check Homebrew (Apple Silicon)
+  ansible.builtin.stat:
+    path: /opt/homebrew/bin/brew
+  register: brew_arm
+  when: os_var_file == 'macos'
+
+- name: Check Homebrew (Intel)
+  ansible.builtin.stat:
+    path: /usr/local/bin/brew
+  register: brew_x86
+  when: os_var_file == 'macos'
+
+- name: Bootstrap Homebrew
+  ansible.builtin.shell:
+    cmd: NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  args:
+    warn: false
+  when:
+    - os_var_file == 'macos'
+    - not brew_arm.stat.exists
+    - not brew_x86.stat.exists
+
+- name: Install brew casks
+  community.general.homebrew:
+    name: "{{ brew_casks }}"
+    state: present
+  when: os_var_file == 'macos'
+
+- name: Enable ghostty COPR (Fedora)
+  community.general.copr:
+    name: pgdev/ghostty
+    state: enabled
+  become: true
+  when: os_var_file == 'fedora'
+
+- name: Install ghostty (Fedora)
+  ansible.builtin.dnf:
+    name: ghostty
+    state: present
+  become: true
+  when: os_var_file == 'fedora'
+
+- name: Import VS Code GPG key (Fedora)
+  ansible.builtin.rpm_key:
+    key: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+  become: true
+  when: os_var_file == 'fedora'
+
+- name: Add VS Code repository (Fedora)
+  ansible.builtin.copy:
+    dest: /etc/yum.repos.d/vscode.repo
+    content: |
+      [code]
+      name=Visual Studio Code
+      baseurl=https://packages.microsoft.com/yumrepos/vscode
+      enabled=1
+      gpgcheck=1
+      gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+  become: true
+  when: os_var_file == 'fedora'
+
+- name: Install VS Code (Fedora)
+  ansible.builtin.dnf:
+    name: code
+    state: present
+  become: true
+  when: os_var_file == 'fedora'
+
+- name: Add gh CLI repository (Fedora)
+  ansible.builtin.command:
+    cmd: dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+  args:
+    warn: false
+  become: true
+  when: os_var_file == 'fedora'
+
+- name: Install gh CLI (Fedora)
+  ansible.builtin.dnf:
+    name: gh
+    state: present
+  become: true
+  when: os_var_file == 'fedora'
+
+- name: Download Ollama RPM (Fedora)
+  ansible.builtin.get_url:
+    url: https://ollama.com/download/ollama-linux-amd64.rpm
+    dest: /tmp/ollama-linux-amd64.rpm
+  when: os_var_file == 'fedora'
+
+- name: Install Ollama RPM (Fedora)
+  ansible.builtin.dnf:
+    name: /tmp/ollama-linux-amd64.rpm
+    state: present
+  become: true
+  when: os_var_file == 'fedora'
+
+- name: Install AUR packages (Manjaro)
+  ansible.builtin.command:
+    cmd: "pamac build --no-confirm {{ item }}"
+    creates: "{{ '/usr/bin/code' if item == 'visual-studio-code-bin' else '/usr/bin/' ~ item }}"
+  loop: "{{ aur_packages }}"
+  when: os_var_file == 'manjaro'
+
+- name: Install opencode
+  ansible.builtin.shell:
+    cmd: curl -fsSL https://opencode.ai/install | bash
+  args:
+    creates: "{{ ansible_env.HOME }}/.opencode/bin/opencode"
+  when: os_var_file != 'windows'
+
+- name: Add Flathub remote (Linux)
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: user
+  when: os_var_file in ['manjaro', 'fedora']
+
+- name: Install flatpak apps (Linux)
+  community.general.flatpak:
+    name: "{{ flatpak_apps }}"
+    state: present
+    method: user
+  when: os_var_file in ['manjaro', 'fedora']
+
+- name: Install winget apps (Windows)
+  ansible.windows.win_powershell:
+    script: |
+      $id = "{{ item }}"
+      winget list --exact --id $id | Out-Null
+      if ($LASTEXITCODE -eq 0) {
+        Write-Output "$id already installed"
+      } else {
+        winget install --exact --id $id --accept-package-agreements --accept-source-agreements --silent
+        if ($LASTEXITCODE -ne 0) { throw "winget install failed for $id" }
+      }
+  loop: "{{ winget_apps }}"
+  when: os_var_file == 'windows'
+
+- name: Install pyenv-win (Windows)
+  ansible.windows.win_powershell:
+    script: |
+      $script = "$env:TEMP\install-pyenv-win.ps1"
+      Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1' -OutFile $script
+      & $script
+  when: os_var_file == 'windows'
