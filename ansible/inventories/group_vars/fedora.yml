@@ -1,0 +1,27 @@
+---
+os_var_file: fedora
+development_group: "@development-tools"
+cli_packages:
+  - nodejs
+  - java-latest-openjdk
+  - golang
+  - lua
+  - nushell
+  - neovim
+  - fish
+  - git
+  - curl
+  - tailscale
+  - zlib-devel
+  - bzip2
+  - bzip2-devel
+  - readline-devel
+  - sqlite-devel
+  - openssl-devel
+  - tk-devel
+  - libffi-devel
+  - xz-devel
+flatpak_apps:
+  - com.bitwarden.desktop
+  - io.ente.auth
+chezmoi_state_dir: "{{ ansible_env.HOME }}/.local/share/chezmoi"
