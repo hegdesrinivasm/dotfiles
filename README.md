@@ -5,16 +5,18 @@ Personal dotfiles and system provisioning for a three-machine setup
 
 ## What this repo manages
 
-- **chezmoi** — dotfiles (shell configs, editors, terminal, opencode).
-- **Ansible** — system provisioning (apps, developer tools, default shell) in `ansible/`.
+- **chezmoi** — dotfiles (shell configs, editor, terminal, opencode) plus
+  Windows app provisioning via `run_once_after_*.ps1.tmpl` scripts.
+- **Ansible** — Unix system provisioning (apps, developer tools, default
+  shell) in `ansible/`.
 
 ## Machines
 
 | Machine | Converged by |
 |---|---|
-| Manjaro / Fedora (Linux) | itself via `bootstrap.sh` |
-| macOS | itself via `bootstrap.sh` (also the control node for Windows) |
-| Windows (stationary desktop) | pushed from the Mac over SSH |
+| Manjaro / Fedora (Linux) | itself via `ansible/bootstrap.sh` |
+| macOS | itself via `ansible/bootstrap.sh` |
+| Windows (stationary desktop) | itself via `bootstrap.ps1` (pure chezmoi) |
 
 ## Fresh setup on Unix (Manjaro / Fedora / macOS)
 
@@ -23,32 +25,32 @@ machine (apps, developer tools, shell, dotfiles via chezmoi):
 
     curl -fsSL https://raw.githubusercontent.com/hegdesrinivasm/dotfiles/chezmoi/ansible/bootstrap.sh | bash
 
+## Fresh setup on Windows
+
+One command installs chezmoi and converges the machine (dotfiles, winget apps,
+Windows Terminal, pyenv-win) — no SSH or second machine required:
+
+    powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/hegdesrinivasm/dotfiles/chezmoi/bootstrap.ps1 | iex"
+
 ## Re-run to converge
+
+Unix:
 
     ~/dotfiles/ansible/bootstrap.sh
 
+Windows:
+
+    powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/hegdesrinivasm/dotfiles/chezmoi/bootstrap.ps1 | iex"
+
 Safe to re-run anytime; installs anything missing since the last run.
-
-## Windows
-
-Windows cannot run Ansible itself, so the Mac converges it over SSH.
-
-One-time setup on Windows (admin PowerShell), only for a brand-new machine:
-
-    Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
-    Start-Service sshd
-    Set-Service -Name sshd -StartupType Automatic
-    # Then add the Mac's public key to C:\ProgramData\ssh\administrators_authorized_keys
-
-From the Mac, converge Windows:
-
-    ansible-playbook -i ~/dotfiles/ansible/inventories/hosts.yml --limit windows ~/dotfiles/ansible/playbooks/site.yml
 
 ## Layout
 
     ansible/
-      bootstrap.sh                       one-command installer + converge
+      bootstrap.sh                       one-command installer + converge (Unix)
       playbooks/site.yml                 the playbook (common → apps → dotfiles → shell)
-      inventories/hosts.yml              Windows host (for the Mac push)
       inventories/group_vars/*.yml       per-OS app lists
       roles/                             common, apps, dotfiles, shell
+    bootstrap.ps1                        one-command bootstrap (Windows)
+    run_once_after_install-apps.ps1.tmpl winget apps + pyenv-win on Windows
+    run_once_after_windows-terminal.ps1.tmpl nushell as default Windows Terminal profile

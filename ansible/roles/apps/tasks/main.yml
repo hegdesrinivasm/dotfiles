@@ -86,7 +86,6 @@
     cmd: curl -fsSL https://opencode.ai/install | bash
   args:
     creates: "{{ ansible_env.HOME }}/.opencode/bin/opencode"
-  when: os_var_file != 'windows'
 
 - name: Add Flathub remote (Linux)
   community.general.flatpak_remote:
@@ -102,25 +101,3 @@
     state: present
     method: user
   when: os_var_file in ['manjaro', 'fedora']
-
-- name: Install winget apps (Windows)
-  ansible.windows.win_powershell:
-    script: |
-      $id = "{{ item }}"
-      winget list --exact --id $id | Out-Null
-      if ($LASTEXITCODE -eq 0) {
-        Write-Output "$id already installed"
-      } else {
-        winget install --exact --id $id --accept-package-agreements --accept-source-agreements --silent
-        if ($LASTEXITCODE -ne 0) { throw "winget install failed for $id" }
-      }
-  loop: "{{ winget_apps }}"
-  when: os_var_file == 'windows'
-
-- name: Install pyenv-win (Windows)
-  ansible.windows.win_powershell:
-    script: |
-      $script = "$env:TEMP\install-pyenv-win.ps1"
-      Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1' -OutFile $script
-      & $script
-  when: os_var_file == 'windows'

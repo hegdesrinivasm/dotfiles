@@ -1,0 +1,43 @@
+{{ if eq .chezmoi.os "windows" -}}
+#!/usr/bin/env powershell
+$ErrorActionPreference = "Stop"
+
+$wingetApps = @(
+    "Git.Git"
+    "OpenJS.NodeJS.LTS"
+    "EclipseAdoptium.Temurin.21.JDK"
+    "BrechtSanders.WinLibs.POSIX.UCRT"
+    "Mozilla.Firefox"
+    "ente-io.auth-desktop"
+    "Bitwarden.Bitwarden"
+    "Valve.Steam"
+    "Microsoft.VisualStudioCode"
+    "Notion.Notion"
+    "Tailscale.Tailscale"
+    "Python.Python.3.12"
+    "GitHub.cli"
+    "Docker.DockerDesktop"
+    "Microsoft.PowerToys"
+    "SST.opencode"
+    "Nushell.Nushell"
+    "Neovim.Neovim"
+    "Ollama.Ollama"
+    "GoLang.Go"
+    "DEVCOM.Lua"
+)
+
+foreach ($id in $wingetApps) {
+    winget list --exact --id $id | Out-Null
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "$id already installed"
+    } else {
+        Write-Host "Installing $id..."
+        winget install --exact --id $id --silent --accept-package-agreements --accept-source-agreements
+        if ($LASTEXITCODE -ne 0) { throw "winget install failed for $id" }
+    }
+}
+
+$pyenvWinInstaller = "$env:TEMP\install-pyenv-win.ps1"
+Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1' -OutFile $pyenvWinInstaller
+& $pyenvWinInstaller
+{{ end -}}
