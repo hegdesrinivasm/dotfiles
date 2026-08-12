@@ -19,28 +19,12 @@
     state: present
   when: os_var_file == 'macos'
 
-- name: Check existing chezmoi state (Unix)
+- name: Check existing chezmoi state
   ansible.builtin.stat:
     path: "{{ chezmoi_state_dir }}"
-  register: chezmoi_state_unix
-  when: os_var_file != 'windows'
+  register: chezmoi_state
 
-- name: Check existing chezmoi state (Windows)
-  ansible.windows.win_stat:
-    path: "{{ chezmoi_state_dir }}"
-  register: chezmoi_state_win
-  when: os_var_file == 'windows'
-
-- name: Initialize dotfiles with chezmoi (Unix)
+- name: Initialize dotfiles with chezmoi
   ansible.builtin.command:
     cmd: "chezmoi init --apply {{ chezmoi_repo_url }}"
-  when:
-    - os_var_file != 'windows'
-    - not (chezmoi_state_unix.stat.exists | default(false))
-
-- name: Initialize dotfiles with chezmoi (Windows)
-  ansible.windows.win_command:
-    cmd: "chezmoi init --apply {{ chezmoi_repo_url }}"
-  when:
-    - os_var_file == 'windows'
-    - not (chezmoi_state_win.stat.exists | default(false))
+  when: not (chezmoi_state.stat.exists | default(false))

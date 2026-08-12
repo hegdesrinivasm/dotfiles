@@ -20,22 +20,9 @@
     path: /etc/shells
     line: "{{ fish_shell_path }}"
   become: true
-  when: os_var_file != 'windows'
 
 - name: Set fish as default shell (Unix)
   ansible.builtin.user:
     name: "{{ ansible_env.USER }}"
     shell: "{{ fish_shell_path }}"
   become: true
-  when: os_var_file != 'windows'
-
-- name: Include Windows Terminal tasks
-  ansible.builtin.include_tasks: windows-terminal.yml
-  when: os_var_file == 'windows'
-
-- name: Ensure sshd service is running (Windows)
-  ansible.windows.win_service:
-    name: sshd
-    start_mode: auto
-    state: started
-  when: os_var_file == 'windows'
