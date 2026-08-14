@@ -5,17 +5,17 @@ palette = "spiderman"
 
 format = """
 $directory\
-[](fg:blue bg:red)\
+[](fg:red bg:blue)\
 $git_branch\
 $git_status\
-[](fg:red bg:light_blue)\
+[](fg:blue bg:gray)\
 $python\
 $nodejs\
 $ruby\
 $java\
-[](fg:light_blue bg:gray)\
+[](fg:gray bg:light_blue)\
 $docker_context\
-[ ](fg:gray)
+[ ](fg:light_blue)
 $character"""
 
 right_format = "$cmd_duration$time"
@@ -40,18 +40,18 @@ disabled = true
 truncation_length = 3
 truncation_symbol = ".../"
 read_only = " readonly"
-read_only_style = "bg:blue fg:bright"
+read_only_style = "bg:red fg:bright"
 format = "[ $path ]($style)[$read_only]($read_only_style)"
-style = "bg:blue fg:bright"
+style = "bg:red fg:bright"
 
 [git_branch]
 symbol = ""
 format = "[ $symbol$branch ]($style)"
-style = "bg:red fg:bright"
+style = "bg:blue fg:bright"
 
 [git_status]
 format = "[ $all_status$ahead_behind ]($style)"
-style = "bg:red fg:bright"
+style = "bg:blue fg:bright"
 conflicted = "≈"
 ahead = "⇡"
 behind = "⇣"
@@ -65,27 +65,27 @@ deleted = "✘"
 [python]
 format = "[ $symbol$version ]($style)"
 symbol = ""
-style = "bg:light_blue fg:black"
+style = "bg:gray fg:bright"
 
 [nodejs]
 format = "[ $symbol$version ]($style)"
 symbol = ""
-style = "bg:light_blue fg:black"
+style = "bg:gray fg:bright"
 
 [ruby]
 format = "[ $symbol$version ]($style)"
 symbol = ""
-style = "bg:light_blue fg:black"
+style = "bg:gray fg:bright"
 
 [java]
 format = "[ $symbol$version ]($style)"
 symbol = ""
-style = "bg:light_blue fg:black"
+style = "bg:gray fg:bright"
 
 [docker_context]
 format = "[ $symbol$context ]($style)"
 symbol = ""
-style = "bg:gray fg:bright"
+style = "bg:light_blue fg:bright"
 
 [cmd_duration]
 min_time = 2_000
