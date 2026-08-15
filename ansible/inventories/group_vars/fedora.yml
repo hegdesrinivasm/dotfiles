@@ -28,7 +28,7 @@ chezmoi_state_dir: "{{ ansible_env.HOME }}/.local/share/chezmoi"
 hypr_packages:
   - hyprland
   - waybar
-  - fuzzel
+  - wofi
   - network-manager-applet
   - gnome-control-center
   - xdg-desktop-portal-hyprland
