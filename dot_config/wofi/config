@@ -1,9 +1,7 @@
 mode=drun
 prompt=>
-width=350
+width=448
 lines=8
-xoffset=20
-yoffset=20
 location=center
 layer=overlay
 matching=fuzzy
