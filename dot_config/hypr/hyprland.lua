@@ -51,7 +51,7 @@ hl.monitor({
 -- Set programs that you use
 local terminal    = "ghostty"
 local fileManager = "nautilus"
-local menu = "fuzzel"
+local menu = "wofi --show drun"
 
 
 -------------------
@@ -300,6 +300,7 @@ hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("$HOME/.config/waybar/scripts/run-cmd
 
 -- ALT bindings
 hl.bind("ALT + Q", hl.dsp.window.close())
+hl.bind("ALT + RETURN", hl.dsp.exec_cmd(menu))
 hl.bind("ALT + SPACE", hl.dsp.exec_cmd(menu))
 hl.bind("ALT + M", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
 
