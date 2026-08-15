@@ -9,8 +9,8 @@ trap 'rm -f "$list"' EXIT
 pactl list sinks | awk -v cur="$current_sink" '
   /^\tName:/ { name=$2; next }
   /^\tDescription:/ {
-    desc=$0; sub(/^\tDescription:\t/, "", desc)
-    printf "%s  %s\tSINK\t%s\n", (name==cur ? "✓" : " "), desc, name
+    desc=$0; sub(/^\tDescription: /, "", desc)
+    printf "%s  󰓃  %s\tSINK\t%s\n", (name==cur ? "✓" : "  "), desc, name
     name=""
   }' >> "$list"
 
@@ -18,8 +18,8 @@ pactl list sources | awk -v cur="$current_source" '
   /^\tName:/ { name=$2; next }
   /^\tDescription:/ {
     if (name ~ /\.monitor$/) { name=""; next }
-    desc=$0; sub(/^\tDescription:\t/, "", desc)
-    printf "%s  %s\tSOURCE\t%s\n", (name==cur ? "✓" : " "), desc, name
+    desc=$0; sub(/^\tDescription: /, "", desc)
+    printf "%s  󰍬  %s\tSOURCE\t%s\n", (name==cur ? "✓" : "  "), desc, name
     name=""
   }' >> "$list"
 

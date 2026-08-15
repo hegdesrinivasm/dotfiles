@@ -84,6 +84,7 @@ end)
 
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
+hl.env("XCURSOR_THEME", "macOS")
 
 
 -----------------------
@@ -295,6 +296,7 @@ hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 -- Beginner-friendly extras
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({}))     -- toggle fullscreen
 hl.bind(mainMod .. " + SPACE", hl.dsp.window.float({ action = "toggle" })) -- toggle floating
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("$HOME/.config/waybar/scripts/run-cmd.sh"))
 
 -- ALT bindings
 hl.bind("ALT + Q", hl.dsp.window.close())
