@@ -31,3 +31,4 @@ hypr_packages:
   - fuzzel
   - network-manager-applet
   - gnome-control-center
+  - xdg-desktop-portal-hyprland

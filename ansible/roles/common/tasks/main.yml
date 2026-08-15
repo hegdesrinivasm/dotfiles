@@ -42,6 +42,20 @@
   become: true
   when: os_var_file == 'fedora'
 
+- name: Install Hyprland packages (Manjaro)
+  community.general.pacman:
+    name: "{{ hypr_packages }}"
+    state: present
+  become: true
+  when: os_var_file == 'manjaro'
+
+- name: Install Hyprland packages (Fedora)
+  ansible.builtin.dnf:
+    name: "{{ hypr_packages }}"
+    state: present
+  become: true
+  when: os_var_file == 'fedora'
+
 - name: Install CLI packages (macOS)
   community.general.homebrew:
     name: "{{ brew_formulae }}"
