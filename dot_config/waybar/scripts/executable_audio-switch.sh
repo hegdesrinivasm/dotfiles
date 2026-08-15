@@ -23,7 +23,7 @@ pactl list sources | awk -v cur="$current_source" '
     name=""
   }' >> "$list"
 
-choice="$(fuzzel --dmenu --with-nth=1 --placeholder="Select audio device" < "$list" 2>/dev/null)"
+choice="$(wofi --dmenu --prompt "Select audio device" < "$list" 2>/dev/null)"
 [ -n "$choice" ] || exit 0
 
 kind="$(printf '%s\n' "$choice" | cut -f2)"

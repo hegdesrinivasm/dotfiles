@@ -51,7 +51,7 @@ hl.monitor({
 -- Set programs that you use
 local terminal    = "ghostty"
 local fileManager = "nautilus"
-local menu = "fuzzel"
+local menu = "wofi --show drun"
 
 
 -------------------
