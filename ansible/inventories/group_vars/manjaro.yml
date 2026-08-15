@@ -22,3 +22,10 @@ flatpak_apps:
 aur_packages:
   - visual-studio-code-bin
 chezmoi_state_dir: "{{ ansible_env.HOME }}/.local/share/chezmoi"
+hypr_packages:
+  - hyprland
+  - waybar
+  - hyprpaper
+  - fuzzel
+  - network-manager-applet
+  - gnome-control-center
