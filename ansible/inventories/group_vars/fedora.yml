@@ -21,6 +21,8 @@ cli_packages:
   - tk-devel
   - libffi-devel
   - xz-devel
+  - zoxide
+  - fzf
 flatpak_apps:
   - com.bitwarden.desktop
   - io.ente.auth

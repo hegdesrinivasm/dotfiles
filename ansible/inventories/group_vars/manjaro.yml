@@ -16,6 +16,8 @@ cli_packages:
   - github-cli
   - ollama
   - tailscale
+  - zoxide
+  - fzf
 flatpak_apps:
   - com.bitwarden.desktop
   - io.ente.auth
