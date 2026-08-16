@@ -28,7 +28,7 @@ hypr_packages:
   - hyprland
   - waybar
   - hyprpaper
-  - fuzzel
+  - wofi
   - network-manager-applet
   - gnome-control-center
   - xdg-desktop-portal-hyprland
