@@ -26,7 +26,6 @@ cli_packages:
 flatpak_apps:
   - com.bitwarden.desktop
   - io.ente.auth
-chezmoi_state_dir: "{{ ansible_env.HOME }}/.local/share/chezmoi"
 hypr_packages:
   - hyprland
   - waybar

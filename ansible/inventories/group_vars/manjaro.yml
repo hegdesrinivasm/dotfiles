@@ -23,7 +23,6 @@ flatpak_apps:
   - io.ente.auth
 aur_packages:
   - visual-studio-code-bin
-chezmoi_state_dir: "{{ ansible_env.HOME }}/.local/share/chezmoi"
 hypr_packages:
   - hyprland
   - waybar

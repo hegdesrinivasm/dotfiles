@@ -1,2 +1,3 @@
 ---
 chezmoi_repo_url: https://github.com/hegdesrinivasm/dotfiles.git
+chezmoi_state_dir: "{{ ansible_env.HOME }}/.local/share/chezmoi"
