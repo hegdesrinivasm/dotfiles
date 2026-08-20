@@ -62,14 +62,6 @@
     state: present
   when: os_var_file == 'macos'
 
-- name: Enable KDE blur effect
-  community.general.kde_config:
-    section: Plugins
-    option: blurEnabled
-    value: "true"
-    file: "{{ ansible_facts['env']['HOME'] }}/.config/kwinrc"
-  when: os_var_file == 'manjaro'
-
 - name: Check pyenv directory
   ansible.builtin.stat:
     path: "{{ ansible_facts['env']['HOME'] }}/.pyenv"
