@@ -55,7 +55,7 @@ main() {
         sudo -v
     fi
 
-    (cd "${CHECKOUT_DIR}" && ansible-playbook -c local -i localhost, "${PLAYBOOK}")
+    (cd "${CHECKOUT_DIR}" && ansible-playbook -c local -i localhost, --ask-become-pass "${PLAYBOOK}")
 }
 
 main "$@"
