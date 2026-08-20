@@ -33,4 +33,4 @@ brew_casks:
   - steam
   - shottr
   - zen
-chezmoi_state_dir: "{{ ansible_env.HOME }}/.local/share/chezmoi"
+chezmoi_state_dir: "{{ ansible_facts['env']['HOME'] }}/.local/share/chezmoi"

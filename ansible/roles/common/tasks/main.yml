@@ -64,20 +64,20 @@
 
 - name: Check pyenv directory
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/.pyenv"
+    path: "{{ ansible_facts['env']['HOME'] }}/.pyenv"
   register: pyenv_dir
   when: os_var_file in ['manjaro', 'fedora']
 
 - name: Check pyenv git repo
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/.pyenv/.git"
+    path: "{{ ansible_facts['env']['HOME'] }}/.pyenv/.git"
   register: pyenv_git
   when: os_var_file in ['manjaro', 'fedora']
 
 - name: Install pyenv
   ansible.builtin.git:
     repo: https://github.com/pyenv/pyenv.git
-    dest: "{{ ansible_env.HOME }}/.pyenv"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.pyenv"
     version: master
   when:
     - os_var_file in ['manjaro', 'fedora']
@@ -86,7 +86,7 @@
 - name: Install pyenv-virtualenv
   ansible.builtin.git:
     repo: https://github.com/pyenv/pyenv-virtualenv.git
-    dest: "{{ ansible_env.HOME }}/.pyenv/plugins/pyenv-virtualenv"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.pyenv/plugins/pyenv-virtualenv"
     version: master
   when:
     - os_var_file in ['manjaro', 'fedora']

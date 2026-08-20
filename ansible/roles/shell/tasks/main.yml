@@ -23,6 +23,6 @@
 
 - name: Set fish as default shell (Unix)
   ansible.builtin.user:
-    name: "{{ ansible_env.USER }}"
+    name: "{{ ansible_facts['env']['USER'] }}"
     shell: "{{ fish_shell_path }}"
   become: true
