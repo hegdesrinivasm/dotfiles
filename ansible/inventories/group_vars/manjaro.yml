@@ -18,6 +18,7 @@ cli_packages:
   - tailscale
   - zoxide
   - fzf
+  - starship
 flatpak_apps:
   - com.bitwarden.desktop
   - io.ente.auth

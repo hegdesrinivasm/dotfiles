@@ -16,6 +16,7 @@ brew_formulae:
   - lua
   - zoxide
   - fzf
+  - starship
 brew_casks:
   - visual-studio-code
   - notion
