@@ -18,11 +18,13 @@ cli_packages:
   - tailscale
   - zoxide
   - fzf
+  - starship
 flatpak_apps:
   - com.bitwarden.desktop
   - io.ente.auth
 aur_packages:
   - visual-studio-code-bin
+  - kwin-effects-forceblur
 hypr_packages:
   - hyprland
   - waybar

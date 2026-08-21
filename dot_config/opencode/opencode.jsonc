@@ -1,7 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "username": "Srinivas Hegde M",
-  "shell": "nu",
   "command": {
     "explore": {
       "template": "Explore the codebase and understand the structure, architecture, and functionalities of the code.",

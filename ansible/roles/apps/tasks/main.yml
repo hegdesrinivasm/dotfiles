@@ -85,7 +85,7 @@
   ansible.builtin.shell:
     cmd: curl -fsSL https://opencode.ai/install | bash
   args:
-    creates: "{{ ansible_env.HOME }}/.opencode/bin/opencode"
+    creates: "{{ ansible_facts['env']['HOME'] }}/.opencode/bin/opencode"
 
 - name: Add Flathub remote (Linux)
   community.general.flatpak_remote:

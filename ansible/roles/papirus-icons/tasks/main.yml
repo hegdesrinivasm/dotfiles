@@ -1,0 +1,52 @@
+---
+- name: Ensure wget is installed
+  ansible.builtin.package:
+    name: wget
+    state: present
+  become: true
+  when: os_var_file != 'macos'
+
+- name: Check if Papirus icons are installed
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.local/share/icons/{{ papirus_variant }}"
+  register: papirus_icons
+  when: os_var_file != 'macos'
+
+- name: Install Papirus icon theme
+  ansible.builtin.shell:
+    cmd: >-
+      wget -qO- https://git.io/papirus-icon-theme-install |
+      env DESTDIR="{{ ansible_env.HOME }}/.local/share/icons" sh
+  when:
+    - os_var_file != 'macos'
+    - not papirus_icons.stat.exists
+
+- name: Check for kwriteconfig5
+  ansible.builtin.command:
+    cmd: which kwriteconfig5
+  register: kwriteconfig5_check
+  ignore_errors: true
+  changed_when: false
+  when: os_var_file != 'macos'
+
+- name: Check for kwriteconfig6
+  ansible.builtin.command:
+    cmd: which kwriteconfig6
+  register: kwriteconfig6_check
+  ignore_errors: true
+  changed_when: false
+  when: os_var_file != 'macos'
+
+- name: Set Papirus as default icon theme (Plasma 5)
+  ansible.builtin.command:
+    cmd: "kwriteconfig5 --file kdeglobals --group KDE --set glob_icon_theme {{ papirus_variant }}"
+  when:
+    - os_var_file != 'macos'
+    - kwriteconfig5_check.rc == 0
+
+- name: Set Papirus as default icon theme (Plasma 6)
+  ansible.builtin.command:
+    cmd: "kwriteconfig6 --file kdeglobals --group KDE --set glob_icon_theme {{ papirus_variant }}"
+  when:
+    - os_var_file != 'macos'
+    - kwriteconfig6_check.rc == 0

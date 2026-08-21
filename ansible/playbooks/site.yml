@@ -20,5 +20,6 @@
   roles:
     - common
     - apps
+    - papirus-icons
     - dotfiles
     - shell

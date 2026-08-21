@@ -16,6 +16,7 @@ brew_formulae:
   - lua
   - zoxide
   - fzf
+  - starship
 brew_casks:
   - visual-studio-code
   - notion
@@ -33,4 +34,3 @@ brew_casks:
   - steam
   - shottr
   - zen
-
