@@ -24,4 +24,3 @@ flatpak_apps:
   - io.ente.auth
 aur_packages:
   - visual-studio-code-bin
-  - kwin-effects-forceblur

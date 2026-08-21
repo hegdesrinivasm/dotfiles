@@ -8,8 +8,5 @@ font-family = JetBrains Mono
 font-family = Maple Mono Normal
 
 cursor-style = bar
-background-opacity = 0.8
-background-blur = 60
-background-opacity-cells = false
 
 shell-integration-features = no-cursor
