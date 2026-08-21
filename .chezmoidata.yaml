@@ -1,0 +1,66 @@
+---
+# Single source of truth for values shared across templates.
+
+git:
+  name: Srinivas Hegde M
+  email: hegdesrinivasm@gmail.com
+  editor: code --wait
+
+# Windows Terminal: nushell default profile
+windowsTerminal:
+  nuShellGuid: "{2b8e0a91-70a1-4e5f-a2c1-84b2b6e39e5f}"
+
+# Apps installed via winget on Windows (run_once_after_install-apps.ps1.tmpl)
+wingetApps:
+  - Git.Git
+  - OpenJS.NodeJS.LTS
+  - EclipseAdoptium.Temurin.21.JDK
+  - BrechtSanders.WinLibs.POSIX.UCRT
+  - Mozilla.Firefox
+  - ente-io.auth-desktop
+  - Bitwarden.Bitwarden
+  - Valve.Steam
+  - Microsoft.VisualStudioCode
+  - Notion.Notion
+  - Tailscale.Tailscale
+  - Python.Python.3.12
+  - GitHub.cli
+  - Docker.DockerDesktop
+  - Microsoft.PowerToys
+  - SST.opencode
+  - Nushell.Nushell
+  - Neovim.Neovim
+  - Ollama.Ollama
+  - GoLang.Go
+  - DEVCOM.Lua
+
+# Canonical PATH policy, rendered into env.sh.tmpl (bash/zsh/sh) and
+# 00-env.fish.tmpl (fish). nushell/env.nu mirrors this by hand because it
+# deliberately checks the OS at runtime instead of via templating.
+# Entries are applied in listed order; "when_os" restricts to one platform.
+shellPath:
+  entries:
+    - comment: Homebrew (macOS only) — prepended for priority
+      when_os: darwin
+      direction: prepend
+      style: joined # single export/fish_add_path group, no existence check
+      paths:
+        - /opt/homebrew/bin
+        - /opt/homebrew/sbin
+        - /opt/homebrew/opt/openjdk/bin
+    - comment: pyenv — Python version manager
+      direction: prepend
+      style: guarded # per-path existence check
+      paths:
+        - $PYENV_ROOT/bin
+        - $PYENV_ROOT/shims
+    - comment: opencode
+      direction: append
+      style: guarded
+      paths:
+        - $HOME/.opencode/bin
+    - comment: chezmoi / local bin
+      direction: append
+      style: guarded
+      paths:
+        - $HOME/.local/bin

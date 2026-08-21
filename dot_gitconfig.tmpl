@@ -1,8 +1,8 @@
 [user]
-	name = Srinivas Hegde M
-	email = hegdesrinivasm@gmail.com
+	name = {{ .git.name }}
+	email = {{ .git.email }}
 [core]
-	editor = code --wait
+	editor = {{ .git.editor }}
 	excludesfile = {{ .chezmoi.homeDir }}/.gitignore_global
 [alias]
 	st = status

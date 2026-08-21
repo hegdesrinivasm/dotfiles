@@ -42,26 +42,16 @@
   become: true
   when: os_var_file == 'fedora'
 
-- name: Install Hyprland packages (Manjaro)
-  community.general.pacman:
-    name: "{{ hypr_packages }}"
-    state: present
-  become: true
-  when: os_var_file == 'manjaro'
-
-- name: Install Hyprland packages (Fedora)
-  ansible.builtin.dnf:
-    name: "{{ hypr_packages }}"
-    state: present
-  become: true
-  when: os_var_file == 'fedora'
-
 - name: Install CLI packages (macOS)
   community.general.homebrew:
     name: "{{ brew_formulae }}"
     state: present
   when: os_var_file == 'macos'
 
+# Install when ~/.pyenv is absent; refresh it when it is already a git
+# checkout (the git module updates in place). Skip only when ~/.pyenv exists
+# but is NOT a git checkout (e.g. a package-manager install) — clobbering
+# that would break the system-managed pyenv.
 - name: Check pyenv directory
   ansible.builtin.stat:
     path: "{{ ansible_facts['env']['HOME'] }}/.pyenv"

@@ -2,6 +2,9 @@
 #!/usr/bin/env powershell
 $ErrorActionPreference = "Stop"
 
+# Nushell profile GUID — defined once in .chezmoidata.yaml
+$guid = '{{ .windowsTerminal.nuShellGuid }}'
+
 $paths = @(
     "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json",
     "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json",
@@ -11,7 +14,6 @@ $settingsPath = $paths | Where-Object { Test-Path $_ } | Select-Object -First 1
 if (-not $settingsPath) {
     $settingsPath = $paths[0]
     New-Item -ItemType Directory -Force -Path (Split-Path $settingsPath) | Out-Null
-    $guid = '{2b8e0a91-70a1-4e5f-a2c1-84b2b6e39e5f}'
     $settings = [pscustomobject]@{
         '$schema' = 'https://aka.ms/terminal-profiles-schema'
         defaultProfile = $guid
@@ -37,7 +39,6 @@ if (-not $settingsPath) {
     if ($nu) {
         $settings.defaultProfile = $nu.guid
     } else {
-        $guid = '{2b8e0a91-70a1-4e5f-a2c1-84b2b6e39e5f}'
         $settings.profiles.list += [pscustomobject]@{
             guid = $guid
             name = 'Nu Shell'

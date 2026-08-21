@@ -81,11 +81,9 @@
   loop: "{{ aur_packages }}"
   when: os_var_file == 'manjaro'
 
-- name: Install opencode
-  ansible.builtin.shell:
-    cmd: curl -fsSL https://opencode.ai/install | bash
-  args:
-    creates: "{{ ansible_facts['env']['HOME'] }}/.opencode/bin/opencode"
+# opencode is installed by chezmoi (run_once_before_install-opencode.sh.tmpl)
+# so user-CLI tools are provisioned identically on every platform — Windows
+# gets it via winget (SST.opencode) in run_once_after_install-apps.ps1.tmpl.
 
 - name: Add Flathub remote (Linux)
   community.general.flatpak_remote:

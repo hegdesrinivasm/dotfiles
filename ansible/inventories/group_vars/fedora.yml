@@ -27,10 +27,3 @@ cli_packages:
 flatpak_apps:
   - com.bitwarden.desktop
   - io.ente.auth
-hypr_packages:
-  - hyprland
-  - waybar
-  - wofi
-  - network-manager-applet
-  - gnome-control-center
-  - xdg-desktop-portal-hyprland

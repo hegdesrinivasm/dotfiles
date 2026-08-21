@@ -4,8 +4,9 @@ set -o pipefail
 
 # nushell requires init.nu to exist before it parses env.nu, so generate it
 # now. If starship is missing, create an empty placeholder so the `use` in
-# env.nu never breaks nushell startup; env.sh regenerates it once starship is
-# available.
+# env.nu never breaks nushell startup; regenerate manually after installing
+# or updating starship:
+#   starship init nu | save -f ~/.cache/starship/init.nu
 mkdir -p "$HOME/.cache/starship"
 
 if command -v starship >/dev/null 2>&1; then

@@ -1,0 +1,9 @@
+{{ if or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") -}}
+#!/bin/sh
+# Install opencode (user-CLI tool). Windows installs it via winget instead
+# (SST.opencode in run_once_after_install-apps.ps1.tmpl).
+if [ -x "$HOME/.opencode/bin/opencode" ]; then
+    exit 0
+fi
+curl -fsSL https://opencode.ai/install | sh
+{{ end -}}
