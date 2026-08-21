@@ -5,5 +5,7 @@
 if [ -x "$HOME/.opencode/bin/opencode" ]; then
     exit 0
 fi
-curl -fsSL https://opencode.ai/install | sh
+# --no-modify-path: the installer's `echo -e` misbehaves under macOS /bin/sh
+# (bash POSIX mode) and corrupts shell rc files; PATH is owned by conf.d instead.
+curl -fsSL https://opencode.ai/install | sh -s -- --no-modify-path
 {{ end -}}
