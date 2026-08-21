@@ -1,8 +1,11 @@
 # Nushell Environment Config File
 #
 # KEEP IN SYNC — this file must define the same PATH entries as:
-#   ~/.config/shell/env.sh   (bash/zsh/sh)
-#   ~/.config/fish/conf.d/00-env.fish (fish)
+#   ~/.config/shell/env.sh   (bash/zsh/sh, rendered from .chezmoidata.yaml)
+#   ~/.config/fish/conf.d/00-env.fish (fish, rendered from .chezmoidata.yaml)
+#
+# This file stays hand-written because it checks the OS at runtime instead of
+# via chezmoi templating.
 #
 # Canonical order:
 #   1. Homebrew (macOS only): /opt/homebrew/bin, /opt/homebrew/sbin,
