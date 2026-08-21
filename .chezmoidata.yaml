@@ -34,12 +34,6 @@ wingetApps:
   - GoLang.Go
   - DEVCOM.Lua
 
-hyprpaper:
-  wallpaper: wallhaven-o525z9.jpg
-  monitors:
-    - DP-2
-    - HDMI-A-1
-
 # Canonical PATH policy, rendered into env.sh.tmpl (bash/zsh/sh) and
 # 00-env.fish.tmpl (fish). nushell/env.nu mirrors this by hand because it
 # deliberately checks the OS at runtime instead of via templating.

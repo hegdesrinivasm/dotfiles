@@ -19,6 +19,10 @@ Personal dotfiles and system provisioning for a three-machine setup
 | macOS | itself via `ansible/bootstrap.sh` |
 | Windows (stationary desktop) | itself via `bootstrap.ps1` (pure chezmoi) |
 
+> The Hyprland desktop stack (hypr/waybar/wofi configs + `hypr_packages`)
+> was retired from the main line and lives on the [`hyprland`](/../../tree/hyprland)
+> branch if ever needed again.
+
 ## Fresh setup on Unix (Manjaro / Fedora / macOS)
 
 One command installs Ansible, clones this repo to `~/.local/share/chezmoi`

@@ -25,11 +25,3 @@ flatpak_apps:
 aur_packages:
   - visual-studio-code-bin
   - kwin-effects-forceblur
-hypr_packages:
-  - hyprland
-  - waybar
-  - hyprpaper
-  - wofi
-  - network-manager-applet
-  - gnome-control-center
-  - xdg-desktop-portal-hyprland
