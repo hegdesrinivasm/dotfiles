@@ -8,4 +8,5 @@ fi
 # pyenv shell integration.
 if command -v pyenv >/dev/null 2>&1; then
   eval "$(pyenv init - bash)"
+  eval "$(pyenv virtualenv-init -)"
 fi
