@@ -1,0 +1,41 @@
+---
+# Single source of truth for values shared across templates.
+
+git:
+  name: Srinivas Hegde M
+  email: hegdesrinivasm@gmail.com
+  editor: code --wait
+
+# Windows Terminal: nushell default profile
+windowsTerminal:
+  nuShellGuid: "{2b8e0a91-70a1-4e5f-a2c1-84b2b6e39e5f}"
+
+# Apps installed via winget on Windows (run_once_after_install-apps.ps1.tmpl)
+wingetApps:
+  - Git.Git
+  - OpenJS.NodeJS.LTS
+  - EclipseAdoptium.Temurin.21.JDK
+  - BrechtSanders.WinLibs.POSIX.UCRT
+  - Mozilla.Firefox
+  - ente-io.auth-desktop
+  - Bitwarden.Bitwarden
+  - Valve.Steam
+  - Microsoft.VisualStudioCode
+  - Notion.Notion
+  - Tailscale.Tailscale
+  - Python.Python.3.12
+  - GitHub.cli
+  - Docker.DockerDesktop
+  - Microsoft.PowerToys
+  - SST.opencode
+  - Nushell.Nushell
+  - Neovim.Neovim
+  - Ollama.Ollama
+  - GoLang.Go
+  - DEVCOM.Lua
+
+hyprpaper:
+  wallpaper: wallhaven-o525z9.jpg
+  monitors:
+    - DP-2
+    - HDMI-A-1

@@ -1,9 +1,7 @@
+{{- range $monitor := .hyprpaper.monitors }}
 wallpaper {
-    monitor = DP-2
-    path = {{ .chezmoi.homeDir }}/Pictures/Wallpapers/wallhaven-o525z9.jpg
+    monitor = {{ $monitor }}
+    path = {{ $.chezmoi.homeDir }}/Pictures/Wallpapers/{{ $.hyprpaper.wallpaper }}
 }
 
-wallpaper {
-    monitor = HDMI-A-1
-    path = {{ .chezmoi.homeDir }}/Pictures/Wallpapers/wallhaven-o525z9.jpg
-}
+{{- end }}
