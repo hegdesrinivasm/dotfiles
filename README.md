@@ -5,8 +5,9 @@ Personal dotfiles and system provisioning for a three-machine setup
 
 ## What this repo manages
 
-- **chezmoi** — dotfiles (shell configs, editor, terminal, opencode) plus
-  Windows app provisioning via `run_once_after_*.ps1.tmpl` scripts.
+- **chezmoi** — dotfiles (shell configs, editor, terminal, opencode), Windows
+  app provisioning via `run_once_after_*.ps1.tmpl` scripts, and user-CLI tools
+  on Unix (e.g. opencode) via `run_once_before_*.sh.tmpl` scripts.
 - **Ansible** — Unix system provisioning (apps, developer tools, default
   shell) in `ansible/`.
 
@@ -20,8 +21,9 @@ Personal dotfiles and system provisioning for a three-machine setup
 
 ## Fresh setup on Unix (Manjaro / Fedora / macOS)
 
-One command installs Ansible, clones this repo to `~/dotfiles`, and converges the
-machine (apps, developer tools, shell, dotfiles via chezmoi):
+One command installs Ansible, clones this repo to `~/.local/share/chezmoi`
+(chezmoi's source state — the only checkout), and converges the machine
+(apps, developer tools, shell, dotfiles via chezmoi):
 
     curl -fsSL https://raw.githubusercontent.com/hegdesrinivasm/dotfiles/chezmoi/ansible/bootstrap.sh | bash
 
@@ -36,7 +38,7 @@ Windows Terminal, pyenv-win) — no SSH or second machine required:
 
 Unix:
 
-    ~/dotfiles/ansible/bootstrap.sh
+    ~/.local/share/chezmoi/ansible/bootstrap.sh
 
 Windows:
 

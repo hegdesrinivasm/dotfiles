@@ -3,7 +3,9 @@ set -euo pipefail
 
 REPO_URL="https://github.com/hegdesrinivasm/dotfiles.git"
 BRANCH="chezmoi"
-CHECKOUT_DIR="${HOME}/dotfiles"
+# Clone straight into chezmoi's source state dir so the repo is checked out
+# exactly once and is immediately usable by both ansible and chezmoi.
+CHECKOUT_DIR="${HOME}/.local/share/chezmoi"
 PLAYBOOK="ansible/playbooks/site.yml"
 
 os="$(uname -s)"

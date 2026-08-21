@@ -19,12 +19,10 @@
     state: present
   when: os_var_file == 'macos'
 
-- name: Check existing chezmoi state
-  ansible.builtin.stat:
-    path: "{{ chezmoi_state_dir }}"
-  register: chezmoi_state
-
-- name: Initialize dotfiles with chezmoi
+# Idempotent either way: clones + applies on a fresh machine, pulls + applies
+# when the state dir already exists. Running it unconditionally keeps dotfiles
+# converging on every playbook run instead of only on first install.
+- name: Apply dotfiles with chezmoi
   ansible.builtin.command:
     cmd: "chezmoi init --apply {{ chezmoi_repo_url }}"
-  when: not (chezmoi_state.stat.exists | default(false))
+  when: os_var_file != 'unsupported'
