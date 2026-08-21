@@ -1,4 +1,15 @@
 # Nushell Environment Config File
+#
+# KEEP IN SYNC — this file must define the same PATH entries as:
+#   ~/.config/shell/env.sh   (bash/zsh/sh)
+#   ~/.config/fish/conf.d/00-env.fish (fish)
+#
+# Canonical order:
+#   1. Homebrew (macOS only): /opt/homebrew/bin, /opt/homebrew/sbin,
+#      /opt/homebrew/opt/openjdk/bin
+#   2. pyenv: ~/.pyenv/bin (prepend), ~/.pyenv/shims (prepend)
+#   3. opencode: ~/.opencode/bin (append)
+#   4. local: ~/.local/bin (append)
 
 # Inside env.nu, $env.PATH is still a string — nushell converts it to a list
 # only after env.nu and config.nu are read. Split it once so the edits below
@@ -7,7 +18,7 @@ $env.PATH = ($env.PATH | split row (char esep))
 
 # Homebrew (macOS only) — prepended for priority
 if $nu.os-info.name == "macos" {
-    $env.PATH = ($env.PATH | prepend ["/opt/homebrew/bin" "/opt/homebrew/sbin"])
+    $env.PATH = ($env.PATH | prepend ["/opt/homebrew/bin" "/opt/homebrew/sbin" "/opt/homebrew/opt/openjdk/bin"])
 }
 
 # pyenv — nushell is the login shell, so .zshrc never runs; add bin + shims ourselves

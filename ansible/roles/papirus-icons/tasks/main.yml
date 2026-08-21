@@ -8,7 +8,7 @@
 
 - name: Check if Papirus icons are installed
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/.local/share/icons/{{ papirus_variant }}"
+    path: "{{ ansible_facts['env']['HOME'] }}/.local/share/icons/{{ papirus_variant }}"
   register: papirus_icons
   when: os_var_file != 'macos'
 
@@ -16,7 +16,7 @@
   ansible.builtin.shell:
     cmd: >-
       wget -qO- https://git.io/papirus-icon-theme-install |
-      env DESTDIR="{{ ansible_env.HOME }}/.local/share/icons" sh
+      env DESTDIR="{{ ansible_facts['env']['HOME'] }}/.local/share/icons" sh
   when:
     - os_var_file != 'macos'
     - not papirus_icons.stat.exists

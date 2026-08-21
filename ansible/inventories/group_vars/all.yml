@@ -1,3 +1,4 @@
 ---
 chezmoi_repo_url: https://github.com/hegdesrinivasm/dotfiles.git
 papirus_variant: Papirus
+chezmoi_state_dir: "{{ ansible_facts['env']['HOME'] }}/.local/share/chezmoi"

@@ -1,5 +1,15 @@
 # Fish environment — autoloaded via conf.d on every fish startup.
-# Mirrors ~/.config/shell/env.sh (bash/zsh/profile). Keep in sync.
+#
+# KEEP IN SYNC — this file must define the same PATH entries as:
+#   ~/.config/shell/env.sh   (bash/zsh/sh)
+#   ~/.config/nushell/env.nu (nushell)
+#
+# Canonical order:
+#   1. Homebrew (macOS only): /opt/homebrew/bin, /opt/homebrew/sbin,
+#      /opt/homebrew/opt/openjdk/bin
+#   2. pyenv: ~/.pyenv/bin (prepend), ~/.pyenv/shims (prepend)
+#   3. opencode: ~/.opencode/bin (append)
+#   4. local: ~/.local/bin (append)
 
 set -gx PYENV_ROOT "$HOME/.pyenv"
 
@@ -11,14 +21,22 @@ fish_add_path --path --prepend /opt/homebrew/opt/openjdk/bin
 
 {{ end -}}
 # pyenv — Python version manager
-fish_add_path --path --prepend "$PYENV_ROOT/bin"
-fish_add_path --path --prepend "$PYENV_ROOT/shims"
+if test -d "$PYENV_ROOT/bin"
+    fish_add_path --path --prepend "$PYENV_ROOT/bin"
+end
+if test -d "$PYENV_ROOT/shims"
+    fish_add_path --path --prepend "$PYENV_ROOT/shims"
+end
 
 # opencode
-fish_add_path --path --append "$HOME/.opencode/bin"
+if test -d "$HOME/.opencode/bin"
+    fish_add_path --path --append "$HOME/.opencode/bin"
+end
 
 # chezmoi / local bin
-fish_add_path --path --append "$HOME/.local/bin"
+if test -d "$HOME/.local/bin"
+    fish_add_path --path --append "$HOME/.local/bin"
+end
 
 # pyenv shell integration
 if command -q pyenv
