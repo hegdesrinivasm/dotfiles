@@ -2,6 +2,7 @@
 theme = dark: Spiderman Dark, light: Spiderman Light
 
 # Fonts (with fallback)
+font-family = Paper Mono
 font-family = IoskeleyMonoTerm Nerd Font Mono
 font-family = SF Mono
 font-family = JetBrains Mono
