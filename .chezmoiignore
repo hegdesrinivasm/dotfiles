@@ -6,6 +6,5 @@ README.md
 .config/ghostty/config
 {{ end }}
 {{ if ne .chezmoi.os "darwin" }}
-Library/Application Support/com.mitchellh.ghostty/config.ghostty
-Library/Application Support/nushell/env.nu
+Library
 {{ end }}
