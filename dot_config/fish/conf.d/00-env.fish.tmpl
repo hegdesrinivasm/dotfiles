@@ -1,27 +1,24 @@
 # Fish environment — autoloaded via conf.d on every fish startup.
-#
-# PATH entries are single-sourced in .chezmoidata.yaml (shellPath) and shared
-# with env.sh. nushell/env.nu mirrors them by hand (runtime OS check by design).
-#
-# Canonical order:
-#   1. Homebrew (macOS only)
-#   2. pyenv: ~/.pyenv/bin, ~/.pyenv/shims
-#   3. opencode: ~/.opencode/bin
-#   4. local: ~/.local/bin
+# PATH entries are single-sourced in .chezmoidata.yaml (shellPath).
+# See also: shell/env.sh.tmpl (bash/zsh), nushell/env.nu (hand-maintained).
 
 set -gx PYENV_ROOT "$HOME/.pyenv"
-{{ range .shellPath.entries }}{{ $whenOs := index . "when_os" }}{{ if or (not $whenOs) (eq $whenOs $.chezmoi.os) }}
-
+{{ range .shellPath.entries -}}
+{{- $whenOs := index . "when_os" -}}
+{{- if or (not $whenOs) (eq $whenOs $.chezmoi.os) }}
 # {{ .comment }}
-{{- $dir := .direction }}{{ range .paths }}
+{{- $dir := .direction }}
+{{- range .paths }}
 {{- if eq $dir "prepend" }}
 fish_add_path --path --prepend "{{ . }}"
 {{- else }}
 fish_add_path --path --append "{{ . }}"
-{{- end }}{{ end }}
-{{- end }}{{ end }}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{ end }}
 
-# pyenv shell integration
+# pyenv
 if command -q pyenv
     pyenv init - fish | source
     pyenv virtualenv-init - | source
