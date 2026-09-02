@@ -1,36 +1,81 @@
 ---
 os_var_file: macos
 brew_formulae:
+  # Core dev tools
   - python
   - git
   - java
+  - openjdk
   - pyenv
   - pyenv-virtualenv
-  - openjdk
-  - nushell
-  - neovim
+  # Shells & prompt
   - fish
-  - node
-  - ollama
-  - go
+  - nushell
+  - starship
+  # Editor & LSP
+  - neovim
   - lua
+  # Runtime & build
+  - node
+  - go
+  - ollama
+  # Shell enhancements
   - zoxide
   - fzf
-  - starship
+  # Utilities
+  - ada-url
+  - bitwarden-cli
+  - colima
+  - coreutils
+  - docker
+  - docker-buildx
+  - docker-compose
+  - duti
+  - lima
+  - luajit
+  - luv
+  - merve
+  - nbytes
+  - qrencode
+  - ripgrep
+  - tree-sitter
+  - typst
+  - zstd
 brew_casks:
+  # Browsers
+  - firefox
+  # Terminal
+  - ghostty
+  # Editor
   - visual-studio-code
+  - zed
+  # Productivity
   - notion
-  - discord
-  - signal
-  - caffeine
+  - obsidian
   - raycast
-  - vlc
   - ticktick
+  - raindropio
+  # Communication
+  - discord
+  - claude
+  # Media
+  - vlc
+  # Dev tools
+  - ollama-app
+  - stats
+  # Cloud & network
+  - google-drive
+  - tailscale-app
+  # Auth & security
   - ente-auth
   - zotero
+  # System utilities
+  - caffeine
   - cleanupbuddy
-  - tailscale-app
-  - affinity
+  - grandperspective
+  - loop
+  - pearcleaner
+  - purge
+  - snapzy
+  # Gaming
   - steam
-  - shottr
-  - zen
