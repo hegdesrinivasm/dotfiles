@@ -81,3 +81,19 @@
   when:
     - os_var_file in ['manjaro', 'fedora']
     - not pyenv_dir.stat.exists or pyenv_git.stat.exists
+
+- name: Check nushell in PATH (macOS)
+  ansible.builtin.command:
+    cmd: which nushell
+  register: nushell_check
+  ignore_errors: true
+  changed_when: false
+  when: os_var_file == 'macos'
+
+- name: Link nushell (macOS)
+  community.general.homebrew:
+    name: nushell
+    state: linked
+  when:
+    - os_var_file == 'macos'
+    - nushell_check.rc != 0
