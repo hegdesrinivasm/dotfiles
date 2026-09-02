@@ -20,6 +20,6 @@
   roles:
     - common
     - apps
-    - papirus-icons
+    - papirus-icons  # Linux-only: skipped on macOS via when guards
     - dotfiles
     - shell
