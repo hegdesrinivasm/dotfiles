@@ -45,6 +45,7 @@ brew_casks:
   # Browsers
   - firefox
   # Terminal
+  - cmux
   - ghostty
   # Editor
   - visual-studio-code
