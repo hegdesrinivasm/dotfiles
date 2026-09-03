@@ -99,3 +99,9 @@
     state: present
     method: user
   when: os_var_file in ['manjaro', 'fedora']
+
+- name: Set Ghostty as default terminal (macOS)
+  ansible.builtin.command:
+    cmd: "duti -s com.mitchellh.ghostty http https"
+  changed_when: false
+  when: os_var_file == 'macos'

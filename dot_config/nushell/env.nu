@@ -1,18 +1,5 @@
-# Nushell Environment Config File
-#
-# KEEP IN SYNC — this file must define the same PATH entries as:
-#   ~/.config/shell/env.sh   (bash/zsh/sh, rendered from .chezmoidata.yaml)
-#   ~/.config/fish/conf.d/00-env.fish (fish, rendered from .chezmoidata.yaml)
-#
-# This file stays hand-written because it checks the OS at runtime instead of
-# via chezmoi templating.
-#
-# Canonical order:
-#   1. Homebrew (macOS only): /opt/homebrew/bin, /opt/homebrew/sbin,
-#      /opt/homebrew/opt/openjdk/bin
-#   2. pyenv: ~/.pyenv/bin (prepend), ~/.pyenv/shims (prepend)
-#   3. opencode: ~/.opencode/bin (append)
-#   4. local: ~/.local/bin (append)
+# Nushell PATH — hand-maintained mirror of shellPath (.chezmoidata.yaml).
+# See shell/env.sh.tmpl (bash/zsh) and fish/conf.d/00-env.fish.tmpl.
 
 # Inside env.nu, $env.PATH is still a string — nushell converts it to a list
 # only after env.nu and config.nu are read. Split it once so the edits below
