@@ -63,7 +63,7 @@ brew_casks:
   # Media
   - vlc
   # Dev tools
-  - ollama-app
+  #- ollama-app
   - stats
   # Cloud & network
   - google-drive
