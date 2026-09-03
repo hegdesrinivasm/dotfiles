@@ -29,6 +29,16 @@ install_ansible() {
             fi
             python3 -m pip install --user ansible \
                 || python3 -m pip install --user --break-system-packages ansible
+
+            # pip --user installs binaries to ~/Library/Python/<ver>/bin or
+            # ~/.local/bin. Ensure that directory is on PATH for the rest of
+            # this script (and for the user's future sessions if not already).
+            _pip_user_bin="$(python3 -c 'import site; print(site.USER_BASE + "/bin")' 2>/dev/null || echo "${HOME}/.local/bin")"
+            export PATH="${_pip_user_bin}:${PATH}"
+
+            if ! grep -qsF "${_pip_user_bin}" "${HOME}/.zshrc" "${HOME}/.bashrc" "${HOME}/.profile" 2>/dev/null; then
+                echo "export PATH=\"${_pip_user_bin}:\${PATH}\"" >> "${HOME}/.profile"
+            fi
             ;;
         *)
             echo "Unsupported OS: ${os}" >&2
