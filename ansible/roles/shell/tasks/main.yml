@@ -1,6 +1,6 @@
 ---
 - name: Get Homebrew prefix (macOS)
-  ansible.builtin.command: brew --prefix
+  ansible.builtin.command: /opt/homebrew/bin/brew --prefix
   register: brew_prefix
   changed_when: false
   when: os_var_file == 'macos'
