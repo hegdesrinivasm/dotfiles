@@ -19,10 +19,21 @@
     state: present
   when: os_var_file == 'macos'
 
+- name: Get Homebrew prefix (macOS)
+  ansible.builtin.command: brew --prefix
+  register: dotfiles_brew_prefix
+  changed_when: false
+  when: os_var_file == 'macos'
+
 # Idempotent either way: clones + applies on a fresh machine, pulls + applies
 # when the state dir already exists. Running it unconditionally keeps dotfiles
 # converging on every playbook run instead of only on first install.
-- name: Apply dotfiles with chezmoi
+- name: Apply dotfiles with chezmoi (macOS)
+  ansible.builtin.command:
+    cmd: "{{ dotfiles_brew_prefix.stdout }}/bin/chezmoi init --apply {{ chezmoi_repo_url }}"
+  when: os_var_file == 'macos'
+
+- name: Apply dotfiles with chezmoi (Linux)
   ansible.builtin.command:
     cmd: "chezmoi init --apply {{ chezmoi_repo_url }}"
-  when: os_var_file != 'unsupported'
+  when: os_var_file in ['manjaro', 'fedora']
