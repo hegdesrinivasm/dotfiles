@@ -106,7 +106,7 @@
       changed_when: false
 
     - name: Set Ghostty as default for HTTP/HTTPS
-      ansible.builtin.command:
-        cmd: duti -s com.mitchellh.ghostty http https
+      ansible.builtin.shell:
+        cmd: /opt/homebrew/bin/duti -s com.mitchellh.ghostty http https
       changed_when: false
   when: os_var_file == 'macos'
