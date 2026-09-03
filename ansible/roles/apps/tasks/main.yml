@@ -49,8 +49,6 @@
 - name: Add gh CLI repository (Fedora)
   ansible.builtin.command:
     cmd: dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
-  args:
-    warn: false
   become: true
   when: os_var_file == 'fedora'
 
@@ -101,7 +99,14 @@
   when: os_var_file in ['manjaro', 'fedora']
 
 - name: Set Ghostty as default terminal (macOS)
-  ansible.builtin.command:
-    cmd: "duti -s com.mitchellh.ghostty http https"
-  changed_when: false
+  block:
+    - name: Register Ghostty with Launch Services
+      ansible.builtin.shell:
+        cmd: /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -f /Applications/Ghostty.app
+      changed_when: false
+
+    - name: Set Ghostty as default for HTTP/HTTPS
+      ansible.builtin.command:
+        cmd: duti -s com.mitchellh.ghostty http https
+      changed_when: false
   when: os_var_file == 'macos'
