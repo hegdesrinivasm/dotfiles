@@ -4,7 +4,6 @@ brew_formulae:
   # Core dev tools
   - python
   - git
-  - java
   - openjdk
   - pyenv
   - pyenv-virtualenv
