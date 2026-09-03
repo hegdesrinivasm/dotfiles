@@ -105,8 +105,13 @@
         cmd: /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -f /Applications/Ghostty.app
       changed_when: false
 
-    - name: Set Ghostty as default for HTTP/HTTPS
+    - name: Set Ghostty as default for HTTP
       ansible.builtin.shell:
-        cmd: /opt/homebrew/bin/duti -s com.mitchellh.ghostty http https
+        cmd: /opt/homebrew/bin/duti -s com.mitchellh.ghostty http
+      changed_when: false
+
+    - name: Set Ghostty as default for HTTPS
+      ansible.builtin.shell:
+        cmd: /opt/homebrew/bin/duti -s com.mitchellh.ghostty https
       changed_when: false
   when: os_var_file == 'macos'
