@@ -41,12 +41,12 @@ truncation_length = 3
 truncation_symbol = ".../"
 read_only = " readonly"
 read_only_style = "bg:red fg:bright"
-format = "[ $path ]($style)[$read_only]($read_only_style)"
+format = "[  $path ]($style)[$read_only]($read_only_style)"
 style = "bg:red fg:bright"
 
 [git_branch]
-symbol = ""
-format = "[ $symbol$branch ]($style)"
+symbol = ""
+format = "[ $symbol $branch ]($style)"
 style = "bg:blue fg:bright"
 
 [git_status]
@@ -63,28 +63,46 @@ renamed = "»"
 deleted = "✘"
 
 [python]
-format = "[ $symbol$version ]($style)"
-symbol = ""
+format = "[ $symbol $version ]($style)"
+symbol = ""
 style = "bg:gray fg:bright"
 
+[golang]
+format = "[ $symbol $version ]($style)"
+symbol = "ﳑ"
+style = "bg:gray fg:bright"
+disabled = true
+
+[rust]
+format = "[ $symbol $version ]($style)"
+symbol = "ﳒ"
+style = "bg:gray fg:bright"
+disabled = true
+
+[terraform]
+format = "[ $symbol $version ]($style)"
+symbol = "ﳓ"
+style = "bg:gray fg:bright"
+disabled = true
+
 [nodejs]
-format = "[ $symbol$version ]($style)"
-symbol = ""
+format = "[ $symbol $version ]($style)"
+symbol = ""
 style = "bg:gray fg:bright"
 
 [ruby]
-format = "[ $symbol$version ]($style)"
-symbol = ""
+format = "[ $symbol $version ]($style)"
+symbol = ""
 style = "bg:gray fg:bright"
 
 [java]
-format = "[ $symbol$version ]($style)"
-symbol = ""
+format = "[ $symbol $version ]($style)"
+symbol = ""
 style = "bg:gray fg:bright"
 
 [docker_context]
-format = "[ $symbol$context ]($style)"
-symbol = ""
+format = "[ $symbol $context ]($style)"
+symbol = ""
 style = "bg:light_blue fg:bright"
 
 [cmd_duration]
