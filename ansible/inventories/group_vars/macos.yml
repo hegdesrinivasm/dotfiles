@@ -44,6 +44,7 @@ brew_formulae:
 brew_casks:
   # Browsers
   - firefox
+  - microsoft-edge
   # Terminal
   - cmux
   - ghostty
@@ -53,12 +54,12 @@ brew_casks:
   # Productivity
   - notion
   - obsidian
-  - raycast
+  #- raycast
   - ticktick
   - raindropio
   # Communication
   - discord
-  - claude
+  #- claude
   # Media
   - vlc
   # Dev tools
