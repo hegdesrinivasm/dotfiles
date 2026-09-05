@@ -1,0 +1,59 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "vim_mode": true,
+  "terminal": {
+    "shell": {
+      "program": "/usr/bin/fish"
+    },
+    "bell": "system"
+  },
+  "relative_line_numbers": "enabled",
+  "gutter": {
+    "line_numbers": true
+  },
+  "minimap": {
+    "show": "never"
+  },
+  "cursor_blink": true,
+  "buffer_font_fallbacks": [
+    "IoskeleyMonoTerm Nerd Font Mono",
+    "Ioskeley Mono",
+    "SF Mono",
+    "Google Sans Code",
+    "Monaco",
+    "JetBrains Mono"
+  ],
+  "buffer_font_family": "Paper Mono",
+  "auto_indent_on_paste": true,
+  "lsp": {
+    "pyright": {
+      "settings": {
+        "python": {
+          "analysis": {
+            "typeCheckingMode": "off",
+            "diagnosticSeverityOverrides": {
+              "reportMissingImports": "none",
+              "reportMissingModuleSource": "none",
+              "reportMissingTypeStubs": "none"
+            }
+          }
+        }
+      }
+    }
+  },
+  "base_keymap": "VSCode",
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
+  "theme": {
+    "mode": "system",
+    "light": "Ayu Light",
+    "dark": "Ayu Dark"
+  }
+}
