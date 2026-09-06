@@ -34,6 +34,13 @@ wingetApps:
   - GoLang.Go
   - DEVCOM.Lua
 
+# Zed terminal shell program, per OS. Keyed by .chezmoi.os values.
+zed:
+  shellProgram:
+    darwin: /opt/homebrew/bin/fish
+    linux: /usr/bin/fish
+    windows: nu.exe
+
 # Canonical PATH policy, rendered into env.sh.tmpl (bash/zsh/sh) and
 # 00-env.fish.tmpl (fish). nushell/env.nu mirrors this by hand because it
 # deliberately checks the OS at runtime instead of via templating.

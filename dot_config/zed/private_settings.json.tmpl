@@ -7,10 +7,11 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "icon_theme": "Catppuccin Macchiato",
   "vim_mode": true,
   "terminal": {
     "shell": {
-      "program": "/usr/bin/fish"
+      "program": "{{ index .zed.shellProgram .chezmoi.os }}"
     },
     "bell": "system"
   },
@@ -50,10 +51,10 @@
   },
   "base_keymap": "VSCode",
   "ui_font_size": 16,
-  "buffer_font_size": 15,
+  "buffer_font_size": 13.0,
   "theme": {
-    "mode": "system",
+    "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Ayu Dark"
+    "dark": "Tokyo Night Moon"
   }
 }
