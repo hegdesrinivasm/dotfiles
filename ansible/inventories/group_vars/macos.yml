@@ -4,6 +4,7 @@ brew_formulae:
   # Core dev tools
   - python
   - git
+  - gh
   - openjdk
   - pyenv
   - pyenv-virtualenv
@@ -60,6 +61,7 @@ brew_casks:
   - discord
   #- claude
   # Media
+  - affinity
   - vlc
   # Dev tools
   #- ollama-app
