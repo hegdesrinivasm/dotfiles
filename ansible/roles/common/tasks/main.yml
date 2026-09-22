@@ -46,40 +46,6 @@
     state: present
   when: os_var_file == 'macos'
 
-# Install when ~/.pyenv is absent; refresh it when it is already a git
-# checkout (the git module updates in place). Skip only when ~/.pyenv exists
-# but is NOT a git checkout (e.g. a package-manager install) — clobbering
-# that would break the system-managed pyenv.
-- name: Check pyenv directory
-  ansible.builtin.stat:
-    path: "{{ ansible_facts['env']['HOME'] }}/.pyenv"
-  register: pyenv_dir
-  when: os_var_file in ['manjaro', 'fedora']
-
-- name: Check pyenv git repo
-  ansible.builtin.stat:
-    path: "{{ ansible_facts['env']['HOME'] }}/.pyenv/.git"
-  register: pyenv_git
-  when: os_var_file in ['manjaro', 'fedora']
-
-- name: Install pyenv
-  ansible.builtin.git:
-    repo: https://github.com/pyenv/pyenv.git
-    dest: "{{ ansible_facts['env']['HOME'] }}/.pyenv"
-    version: master
-  when:
-    - os_var_file in ['manjaro', 'fedora']
-    - not pyenv_dir.stat.exists or pyenv_git.stat.exists
-
-- name: Install pyenv-virtualenv
-  ansible.builtin.git:
-    repo: https://github.com/pyenv/pyenv-virtualenv.git
-    dest: "{{ ansible_facts['env']['HOME'] }}/.pyenv/plugins/pyenv-virtualenv"
-    version: master
-  when:
-    - os_var_file in ['manjaro', 'fedora']
-    - not pyenv_dir.stat.exists or pyenv_git.stat.exists
-
 - name: Check nushell in PATH (macOS)
   ansible.builtin.stat:
     path: /opt/homebrew/bin/nushell

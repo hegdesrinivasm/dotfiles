@@ -16,6 +16,7 @@ cli_packages:
   - github-cli
   - ollama
   - tailscale
+  - uv
   - zoxide
   - fzf
   - starship

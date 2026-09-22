@@ -24,6 +24,7 @@ wingetApps:
   - Notion.Notion
   - Tailscale.Tailscale
   - Python.Python.3.12
+  - astral-sh.uv
   - GitHub.cli
   - Docker.DockerDesktop
   - Microsoft.PowerToys
@@ -55,12 +56,6 @@ shellPath:
         - /opt/homebrew/bin
         - /opt/homebrew/sbin
         - /opt/homebrew/opt/openjdk/bin
-    - comment: pyenv — Python version manager
-      direction: prepend
-      style: guarded # per-path existence check
-      paths:
-        - $PYENV_ROOT/bin
-        - $PYENV_ROOT/shims
     - comment: opencode
       direction: append
       style: guarded

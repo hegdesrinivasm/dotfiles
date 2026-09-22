@@ -2,7 +2,6 @@
 # PATH entries are single-sourced in .chezmoidata.yaml (shellPath).
 # See also: shell/env.sh.tmpl (bash/zsh), nushell/env.nu (hand-maintained).
 
-set -gx PYENV_ROOT "$HOME/.pyenv"
 {{ range .shellPath.entries -}}
 {{- $whenOs := index . "when_os" -}}
 {{- if or (not $whenOs) (eq $whenOs $.chezmoi.os) }}
@@ -17,12 +16,6 @@ fish_add_path --path --append "{{ . }}"
 {{- end -}}
 {{- end -}}
 {{ end }}
-
-# pyenv
-if command -q pyenv
-    pyenv init - fish | source
-    pyenv virtualenv-init - | source
-end
 
 # starship
 if command -q starship
