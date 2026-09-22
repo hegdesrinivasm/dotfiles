@@ -24,6 +24,7 @@ wingetApps:
   - Notion.Notion
   - Tailscale.Tailscale
   - Python.Python.3.12
+  - astral-sh.uv
   - GitHub.cli
   - Docker.DockerDesktop
   - Microsoft.PowerToys

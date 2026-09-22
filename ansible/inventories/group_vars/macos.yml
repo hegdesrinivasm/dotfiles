@@ -6,8 +6,7 @@ brew_formulae:
   - git
   - gh
   - openjdk
-  - pyenv
-  - pyenv-virtualenv
+  - uv
   # Shells & prompt
   - fish
   - nushell

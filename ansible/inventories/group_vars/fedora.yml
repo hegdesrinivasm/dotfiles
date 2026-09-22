@@ -12,15 +12,8 @@ cli_packages:
   - git
   - curl
   - tailscale
-  - zlib-devel
+  - uv
   - bzip2
-  - bzip2-devel
-  - readline-devel
-  - sqlite-devel
-  - openssl-devel
-  - tk-devel
-  - libffi-devel
-  - xz-devel
   - zoxide
   - fzf
   - starship
