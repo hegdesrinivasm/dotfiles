@@ -1,0 +1,120 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+palette = "spiderman"
+
+format = """
+$directory\
+[](fg:red bg:blue)\
+$git_branch\
+$git_status\
+[](fg:blue bg:gray)\
+$python\
+$nodejs\
+$ruby\
+$java\
+[](fg:gray bg:light_blue)\
+$docker_context\
+[ ](fg:light_blue)
+$character"""
+
+right_format = "$cmd_duration$time"
+
+[palettes.spiderman]
+fg = "#e3e3e3"
+bright = "#fffef6"
+black = "#1b1d1e"
+gray = "#505354"
+red = "#e60813"
+bright_red = "#ff0325"
+light_red = "#e24756"
+blue = "#2c3fff"
+blue_2 = "#1d50ff"
+light_blue = "#6184ff"
+mid_blue = "#747cff"
+
+[package]
+disabled = true
+
+[directory]
+truncation_length = 3
+truncation_symbol = ".../"
+read_only = " readonly"
+read_only_style = "bg:red fg:bright"
+format = "[  $path ]($style)[$read_only]($read_only_style)"
+style = "bg:red fg:bright"
+
+[git_branch]
+symbol = ""
+format = "[ $symbol $branch ]($style)"
+style = "bg:blue fg:bright"
+
+[git_status]
+format = "[ $all_status$ahead_behind ]($style)"
+style = "bg:blue fg:bright"
+conflicted = "≈"
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+untracked = "?"
+staged = "+"
+modified = "~"
+renamed = "»"
+deleted = "✘"
+
+[python]
+format = "[ $symbol $version ]($style)"
+symbol = ""
+style = "bg:gray fg:bright"
+
+[golang]
+format = "[ $symbol $version ]($style)"
+symbol = "ﳑ"
+style = "bg:gray fg:bright"
+disabled = true
+
+[rust]
+format = "[ $symbol $version ]($style)"
+symbol = "ﳒ"
+style = "bg:gray fg:bright"
+disabled = true
+
+[terraform]
+format = "[ $symbol $version ]($style)"
+symbol = "ﳓ"
+style = "bg:gray fg:bright"
+disabled = true
+
+[nodejs]
+format = "[ $symbol $version ]($style)"
+symbol = ""
+style = "bg:gray fg:bright"
+
+[ruby]
+format = "[ $symbol $version ]($style)"
+symbol = ""
+style = "bg:gray fg:bright"
+
+[java]
+format = "[ $symbol $version ]($style)"
+symbol = ""
+style = "bg:gray fg:bright"
+
+[docker_context]
+format = "[ $symbol $context ]($style)"
+symbol = ""
+style = "bg:light_blue fg:bright"
+
+[cmd_duration]
+min_time = 2_000
+format = "took [$duration](gray) "
+
+[time]
+time_format = "%H:%M"
+format = "[$time]($style) "
+style = "gray"
+disabled = false
+
+[character]
+success_symbol = "[➜](bold blue)"
+error_symbol = "[✗](bold bright_red)"
